@@ -4,11 +4,7 @@
     <projectFile>SeaBattle/SeaBattle.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3de34b6a-b216-4c74-bf40-41a1b014deab" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/SeaBattle/Cell.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeaBattle/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SeaBattle/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeaBattle/SeaBattle.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/SeaBattle/SeaBattle.csproj" afterDir="false" />
-    </list>
+    <list default="true" id="3de34b6a-b216-4c74-bf40-41a1b014deab" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -68,7 +64,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616682145847</updated>
-      <workItem from="1616682150057" duration="54988000" />
+      <workItem from="1616682150057" duration="55789000" />
     </task>
     <servers />
   </component>
@@ -90,5 +86,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
 </project>

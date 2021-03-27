@@ -128,7 +128,7 @@ namespace SeaBattle
             return counter == length;
         }
 
-        public bool ISCellFree(int x, int y)//does not work needs correct check on bounds
+        public bool ISCellFree(int x, int y)
         {
             if (x ==size.width)
             {
