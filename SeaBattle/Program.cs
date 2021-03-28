@@ -6,8 +6,8 @@ namespace SeaBattle
        
         public static void Main(string[] args)
         { 
-            GameLogic gameLogic = new GameLogic();
-            gameLogic.Start();
+            Game game = new Game();
+            game.Start();
         }
     }
-}
+} 

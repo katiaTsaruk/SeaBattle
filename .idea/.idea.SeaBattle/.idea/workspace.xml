@@ -4,7 +4,14 @@
     <projectFile>SeaBattle/SeaBattle.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3de34b6a-b216-4c74-bf40-41a1b014deab" name="Default Changelist" comment="" />
+    <list default="true" id="3de34b6a-b216-4c74-bf40-41a1b014deab" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.SeaBattle/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SeaBattle/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.SeaBattle/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SeaBattle/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SeaBattle/Cell.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SeaBattle/Cell.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SeaBattle/GameLogic.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SeaBattle/Game.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SeaBattle/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SeaBattle/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SeaBattle/SeaBattle.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/SeaBattle/SeaBattle.csproj" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,10 +22,11 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/SeaBattle/Program.cs" />
       <option value="$PROJECT_DIR$/SeaBattle/CoordSystem.cs" />
-      <option value="$PROJECT_DIR$/SeaBattle/Cell.cs" />
       <option value="$PROJECT_DIR$/SeaBattle/GameLogic.cs" />
+      <option value="$PROJECT_DIR$/SeaBattle/Program.cs" />
+      <option value="$PROJECT_DIR$/SeaBattle/Cell.cs" />
+      <option value="$PROJECT_DIR$/SeaBattle/Game.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1qFjHR2OFeDmSKvQqCo5BF2hWaL" />
@@ -64,14 +72,15 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616682145847</updated>
-      <workItem from="1616682150057" duration="55789000" />
+      <workItem from="1616682150057" duration="57684000" />
+      <workItem from="1616963082188" duration="3384000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="UnityProjectConfiguration" hasMinimizedUI="null" />
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -83,6 +92,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />

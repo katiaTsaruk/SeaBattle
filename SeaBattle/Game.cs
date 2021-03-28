@@ -2,19 +2,19 @@
 
 namespace SeaBattle
 {
-    public class GameLogic
+    public class Game
     {
         private Cell size;
         private Cell[,] cellCoord;
         Cell cell;
         public void Start()
         {
-            size = new Cell(11, 11);
-            cellCoord = new Cell[size.width, size.height*2+1];
+            size = new Cell(11, 11);// the actual size of the field is for 1 cell smaller than this number
+            cellCoord = new Cell[size.x, size.y*2+1];
             DrawTwoFields();
             SetFlotilia(false);
             SetFlotilia(true);
-            Console.SetCursorPosition(1,size.height*2+2);
+            Console.SetCursorPosition(1,size.y*2+2);
             //WriteRules();
         }
 
@@ -23,27 +23,27 @@ namespace SeaBattle
             DrawField(0);
             Console.WriteLine("");
             Console.WriteLine("Computer");
-            DrawField(size.height+1);
+            DrawField(size.y+1);
             GetWriteName();
         }
 
         public void DrawField(int extraDistance)
         {
             Console.Write(" ");
-            for (int i = 0; i < size.width - 1; i++)
+            for (int i = 0; i < size.x - 1; i++)
             {
                 Console.Write(i);
             }
 
             Console.WriteLine(" ");
-            for (int i = 0; i < size.height - 1; i++)
+            for (int i = 0; i < size.y - 1; i++)
             {
                 Console.WriteLine(i);
             }
             
-            for (int i = 1; i < size.width; i++)
+            for (int i = 1; i < size.x; i++)
             {
-                for (int j = 1+extraDistance; j < size.height+extraDistance; j++)
+                for (int j = 1+extraDistance; j < size.y+extraDistance; j++)
                 {
                     PaintCell(i,j,ConsoleColor.White," ",ConsoleColor.White);
                 }
@@ -66,7 +66,7 @@ namespace SeaBattle
                 cellCoord[Console.CursorLeft, Console.CursorTop].isFree = false;
             }
         }
-        public void SpawnShip(int length, int amount, bool isSecondField)
+        public void SpawnShips(int length, int amount, bool isSecondField)
         {
             Random rand = new Random();
             int dopHeight;
@@ -75,7 +75,7 @@ namespace SeaBattle
             bool isRow = rand.Next(1, 3)==1;
             if (isSecondField)
             {
-                dopHeight = size.height + 1;
+                dopHeight = size.y + 1;
                 shipColor = ConsoleColor.Black;
                 shipSymbol = "#";
             }
@@ -87,7 +87,7 @@ namespace SeaBattle
             }
             for (int i = 0; i < amount; i++)
             {
-                Console.SetCursorPosition(rand.Next(2, size.width-length), rand.Next(2, size.height-length)+dopHeight);
+                Console.SetCursorPosition(rand.Next(2, size.x-length), rand.Next(2, size.y-length)+dopHeight);
                 if (IsPlaceFree(Console.CursorLeft, Console.CursorTop,length,isRow))
                 {
                     CreateLongRowShip(length,shipColor,shipSymbol);
@@ -96,57 +96,63 @@ namespace SeaBattle
                 {
                     CreateLongColumnShip(length,shipColor,shipSymbol);
                 }
-                else i--;
+                else
+                {
+                    i--;
+                }
             }
         }
         public void SetFlotilia(bool isSecondField)
         {
             
             //4 cell ship
-            SpawnShip(4,1,isSecondField);
+            SpawnShips(4,1,isSecondField);
             //3 cell ship
-            SpawnShip(3,2,isSecondField);
+            SpawnShips(3,2,isSecondField);
             // 2 cell ship
-            SpawnShip(2,3,isSecondField);
+            SpawnShips(2,3,isSecondField);
             // 1 cell ship
-            SpawnShip(1,4,isSecondField);
+            SpawnShips(1,4,isSecondField);
         } 
 
         public bool IsPlaceFree(int x, int y, int length, bool isRow)
         {
             int counter = 0;
             
-            while (counter < length && ISCellFree(x,y))
+            while (counter < length && IsCellFree(x,y))
             {
                 if (isRow)
                 {
                     x++;
                 }
-                else y++;
+                else
+                {
+                    y++;
+                }
                 counter++;
             }
             return counter == length;
         }
-
-        public bool ISCellFree(int x, int y)
+        public bool IsCellFree(int x, int y)
         {
-            if (x ==size.width)
+            bool isCellFree=cellCoord[x, y].isFree;;
+            if (x < size.x && isCellFree)
             {
-                return cellCoord[x, y].isFree  && cellCoord[x - 1, y].isFree && cellCoord[x, y + 1].isFree && cellCoord[x, y - 1].isFree;
+                isCellFree = cellCoord[x+1, y].isFree;
             }
-            else if (y==(size.height*2+1) || y==size.height)
+            if (x > 2 && isCellFree)
             {
-                return cellCoord[x, y].isFree && cellCoord[x+1,y].isFree && cellCoord[x - 1, y].isFree && cellCoord[x, y - 1].isFree;
+                isCellFree = cellCoord[x-1, y].isFree;
             }
-            else if (x == 2)
+            if (y != 2 && y != size.y + 3 && isCellFree) 
             {
-                return cellCoord[x, y].isFree && cellCoord[x+1,y].isFree && cellCoord[x, y + 1].isFree && cellCoord[x, y - 1].isFree;
+                isCellFree = cellCoord[x, y-1].isFree;
             }
-            else if (y == 2)
+            if (y != size.y && y != size.y * 2 + 1 && isCellFree) 
             {
-                return cellCoord[x, y].isFree && cellCoord[x+1,y].isFree && cellCoord[x - 1, y].isFree && cellCoord[x, y + 1].isFree;
+                isCellFree = cellCoord[x, y+1].isFree;
             }
-            else return cellCoord[x, y].isFree && cellCoord[x+1,y].isFree && cellCoord[x - 1, y].isFree && cellCoord[x, y + 1].isFree && cellCoord[x, y - 1].isFree;
+            return isCellFree;
         }
         public void WriteRules() // need to be finished
         {

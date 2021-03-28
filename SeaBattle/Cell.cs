@@ -2,17 +2,17 @@
 {
     public class Cell
     {
-        public int width, height;
+        public int x, y;
         public bool isFree;
 
         public Cell( bool SetIsFree)
         {
             isFree = SetIsFree;
         }
-        public Cell(int setWidth, int setHeight)
+        public Cell(int setX, int setY)
         {
-            width=setWidth; 
-            height=setHeight;
+            x=setX; 
+            y=setY;
         }
     }
 }
