@@ -5,12 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3de34b6a-b216-4c74-bf40-41a1b014deab" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.SeaBattle/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SeaBattle/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SeaBattle/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SeaBattle/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeaBattle/Cell.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SeaBattle/Cell.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeaBattle/GameLogic.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SeaBattle/Game.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeaBattle/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SeaBattle/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeaBattle/SeaBattle.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/SeaBattle/SeaBattle.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SeaBattle/Game.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SeaBattle/Game.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +69,9 @@
       <option name="presentableId" value="Default" />
       <updated>1616682145847</updated>
       <workItem from="1616682150057" duration="57684000" />
-      <workItem from="1616963082188" duration="3384000" />
+      <workItem from="1616963082188" duration="3691000" />
+      <workItem from="1617011904324" duration="59000" />
+      <workItem from="1617128551024" duration="4008000" />
     </task>
     <servers />
   </component>

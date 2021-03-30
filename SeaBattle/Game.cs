@@ -55,24 +55,26 @@ namespace SeaBattle
             for (int i = 0; i < length; i++)
             {
                 PaintCell(Console.CursorLeft, Console.CursorTop, ConsoleColor.White, ShipSymbol, ShipColor);
-                cellCoord[Console.CursorLeft, Console.CursorTop].isFree = false;
+                cellCoord[Console.CursorLeft-1, Console.CursorTop].isFree = false;
             }
         }
         public void CreateLongColumnShip(int length, ConsoleColor ShipColor, string ShipSymbol)
         {
+            int x = Console.CursorLeft;
             for (int i = 0; i < length; i++)
             {
-                PaintCell(Console.CursorLeft, Console.CursorTop+1, ConsoleColor.White, ShipSymbol, ShipColor);
-                cellCoord[Console.CursorLeft, Console.CursorTop].isFree = false;
+                PaintCell(x, Console.CursorTop+1, ConsoleColor.White, ShipSymbol, ShipColor);
+                //x--;
+                cellCoord[Console.CursorLeft-1, Console.CursorTop].isFree = false;
             }
         }
+
         public void SpawnShips(int length, int amount, bool isSecondField)
         {
             Random rand = new Random();
             int dopHeight;
             ConsoleColor shipColor;
             string shipSymbol;
-            bool isRow = rand.Next(1, 3)==1;
             if (isSecondField)
             {
                 dopHeight = size.y + 1;
@@ -85,23 +87,43 @@ namespace SeaBattle
                 shipColor = ConsoleColor.White;
                 shipSymbol = " ";
             }
+
             for (int i = 0; i < amount; i++)
             {
-                Console.SetCursorPosition(rand.Next(2, size.x-length), rand.Next(2, size.y-length)+dopHeight);
-                if (IsPlaceFree(Console.CursorLeft, Console.CursorTop,length,isRow))
+                Console.SetCursorPosition(rand.Next(2, size.x - length), rand.Next(2, size.y - length) + dopHeight);
+                if (rand.Next(1, 3) == 1)
                 {
-                    CreateLongRowShip(length,shipColor,shipSymbol);
-                }
-                else if (IsPlaceFree(Console.CursorLeft, Console.CursorTop, length,isRow))
-                {
-                    CreateLongColumnShip(length,shipColor,shipSymbol);
+                    if (IsPlaceFree(Console.CursorLeft, Console.CursorTop, length, true))
+                    {
+                        CreateLongRowShip(length, shipColor, shipSymbol);
+                    }
+                    else if (IsPlaceFree(Console.CursorLeft, Console.CursorTop, length, false))
+                    {
+                        CreateLongColumnShip(length, shipColor, shipSymbol);
+                    }
+                    else
+                    {
+                        i--;
+                    }
                 }
                 else
                 {
-                    i--;
+                    if (IsPlaceFree(Console.CursorLeft, Console.CursorTop, length, false))
+                    {
+                        CreateLongColumnShip(length, shipColor, shipSymbol);
+                    }
+                    else if (IsPlaceFree(Console.CursorLeft, Console.CursorTop, length, true))
+                    {
+                        CreateLongRowShip(length, shipColor, shipSymbol);
+                    }
+                    else
+                    {
+                        i--;
+                    }
                 }
             }
         }
+
         public void SetFlotilia(bool isSecondField)
         {
             
