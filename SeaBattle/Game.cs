@@ -8,6 +8,9 @@ namespace SeaBattle
         private Cell[,] cellCoord;
         Cell cell;
         public bool isPlayersTurn=true;
+        public int compHitCounter = 0;
+        public int playerHitCounter = 0;
+        
         public void Start()
         {
             size = new Cell(11, 11);// the actual size of the field is for 1 cell smaller than this number)))
@@ -15,14 +18,64 @@ namespace SeaBattle
             DrawTwoFields();
             SetFlotilia(false);
             SetFlotilia(true);
-            if (isPlayersTurn)
+            while (compHitCounter != 20 || playerHitCounter != 20)
             {
-                CheckShootedCell();
+                if (isPlayersTurn)
+                {
+                    PlayerShoot();
+                }
+                else
+                {
+                    ComputerShoot();
+                }
             }
+            EndGame();
             //WriteRules();
         }
 
-        public void CheckShootedCell()
+        public void EndGame()
+        {
+            if (compHitCounter == 20)
+            {
+                Console.SetCursorPosition(1,size.y*2+2);
+                Console.WriteLine("Computer wins!");
+            }
+            else
+            {
+                Console.SetCursorPosition(1,size.y*2+2);
+                Console.WriteLine("You win!");
+            }
+        }
+        public void ComputerShoot()
+        {
+            Random rand = new Random();
+            int x = rand.Next(2, 12);
+            int y = rand.Next(size.y + 1, size.y * 2 + 2);
+            if (cellCoord[x, y].isFree)
+            {
+                PaintCell(x, y, ConsoleColor.Green, " ", ConsoleColor.Green);
+                Console.SetCursorPosition(1,size.y*2+2);
+                Console.WriteLine("Computer missed");
+                Console.Write("Press ENTER to continue");
+                Console.ReadLine();
+                ClearLine(1);
+                ClearLine(2);
+                isPlayersTurn = true;
+            }
+            else
+            {
+                PaintCell(x, y, ConsoleColor.Red, "#", ConsoleColor.Black);
+                Console.SetCursorPosition(1,size.y*2+2);
+                Console.WriteLine("Computer hits your ship!");
+                Console.Write("Press ENTER to continue");
+                Console.ReadLine();
+                ClearLine(1);
+                ClearLine(2);
+                compHitCounter++;
+                isPlayersTurn = false;
+            }
+        }
+        public void PlayerShoot()
         {
             Console.SetCursorPosition(1,size.y*2+2);
             Console.WriteLine("Your turn");
@@ -48,6 +101,11 @@ namespace SeaBattle
                 PaintCell(x, y, ConsoleColor.Red, "#", ConsoleColor.Black);
                 Console.SetCursorPosition(1,size.y*2+2);
                 Console.Write("You find a ship!");
+                Console.Write("Press ENTER to continue");
+                Console.ReadLine();
+                ClearLine(1);
+                ClearLine(2);
+                playerHitCounter++;
                 isPlayersTurn = true;
             }
         }
