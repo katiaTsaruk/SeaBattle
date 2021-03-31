@@ -16,6 +16,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+  </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
       <option value="$PROJECT_DIR$/SeaBattle/CoordSystem.cs" />
@@ -71,7 +74,8 @@
       <workItem from="1616682150057" duration="57684000" />
       <workItem from="1616963082188" duration="3691000" />
       <workItem from="1617011904324" duration="59000" />
-      <workItem from="1617128551024" duration="4008000" />
+      <workItem from="1617128551024" duration="5466000" />
+      <workItem from="1617167677838" duration="12679000" />
     </task>
     <servers />
   </component>

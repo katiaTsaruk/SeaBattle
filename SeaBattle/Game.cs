@@ -3,21 +3,112 @@
 namespace SeaBattle
 {
     public class Game
-    {
+    { // можно сделать управление стрелочками для расстановки кораблей и подсвечивать возможные варианты клеточек 
         private Cell size;
         private Cell[,] cellCoord;
         Cell cell;
+        public bool isPlayersTurn=true;
         public void Start()
         {
-            size = new Cell(11, 11);// the actual size of the field is for 1 cell smaller than this number
+            size = new Cell(11, 11);// the actual size of the field is for 1 cell smaller than this number)))
             cellCoord = new Cell[size.x, size.y*2+1];
             DrawTwoFields();
             SetFlotilia(false);
             SetFlotilia(true);
-            Console.SetCursorPosition(1,size.y*2+2);
+            if (isPlayersTurn)
+            {
+                CheckShootedCell();
+            }
             //WriteRules();
         }
 
+        public void CheckShootedCell()
+        {
+            Console.SetCursorPosition(1,size.y*2+2);
+            Console.WriteLine("Your turn");
+            int x= GetShootX()+1;
+            int y =GetShootY()+1;
+            ClearLine(1);
+            ClearLine(2);
+            ClearLine(2);
+            
+            if (cellCoord[x,y].isFree)
+            {
+                PaintCell(x, y, ConsoleColor.Green, " ", ConsoleColor.Green);
+                Console.SetCursorPosition(1,size.y*2+2);
+                Console.WriteLine("This cell is free(");
+                Console.Write("Press ENTER to continue");
+                Console.ReadLine();
+                ClearLine(1);
+                ClearLine(2);
+                isPlayersTurn = false;
+            }
+            else
+            {
+                PaintCell(x, y, ConsoleColor.Red, "#", ConsoleColor.Black);
+                Console.SetCursorPosition(1,size.y*2+2);
+                Console.Write("You find a ship!");
+                isPlayersTurn = true;
+            }
+        }
+        
+        public int GetShootX()
+        {
+            int shootX=10;
+            bool isCorrect = false;
+            Console.Write("Write x coordinate of the cell(0-9), you want to shoot: ");
+            while (!isCorrect)
+            {
+                while (!int.TryParse(Console.ReadLine(), out shootX))
+                {
+                    ClearLine(1);
+                    Console.SetCursorPosition(1, Console.CursorTop - 1);
+                    Console.Write("Are you an Idiot? Please write a number: ");
+                }
+
+                if (shootX >= 0 && shootX <= 9)
+                {
+                    isCorrect = true;
+                }
+                else
+                {
+                    isCorrect = false;
+                    ClearLine(1);
+                    Console.SetCursorPosition(1, Console.CursorTop - 1);
+                    Console.Write("Are you an Idiot? The number between 0 and 9: ");
+                }
+            }
+            return shootX;
+        }
+        public int GetShootY()
+        {
+            int shootY=10;
+            bool isCorrect = false;
+            Console.Write("Write y coordinate of the cell(0-9), you want to shoot: ");
+            while (!isCorrect)
+            {
+                while (!int.TryParse(Console.ReadLine(), out shootY))
+                {
+                    ClearLine(1);
+                    Console.SetCursorPosition(1, Console.CursorTop - 1);
+                    Console.Write("Are you an Idiot? Please write a number: ");
+                }
+
+                if (shootY >= 0 && shootY <= 9)
+                {
+                    isCorrect = true;
+                }
+                else
+                {
+                    isCorrect = false;
+                    ClearLine(1);
+                    Console.SetCursorPosition(1, Console.CursorTop - 1);
+                    Console.Write("Are you an Idiot? The number between 0 and 9: ");
+                }
+            }
+            return shootY;
+        }
+        
         public void DrawTwoFields()
         {
             DrawField(0);
@@ -64,7 +155,6 @@ namespace SeaBattle
             for (int i = 0; i < length; i++)
             {
                 PaintCell(x, Console.CursorTop+1, ConsoleColor.White, ShipSymbol, ShipColor);
-                //x--;
                 cellCoord[Console.CursorLeft-1, Console.CursorTop].isFree = false;
             }
         }
