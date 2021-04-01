@@ -4,16 +4,14 @@ namespace SeaBattle
 {
     public class Game
     { // можно сделать управление стрелочками для расстановки кораблей и подсвечивать возможные варианты клеточек 
-        private Cell size;
+        private (int x, int y) size= (11, 11);// the actual size of the field is for 1 cell smaller than this number)))
         private Cell[,] cellCoord;
-        Cell cell;
         public bool isPlayersTurn=true;
         public int compHitCounter = 0;
         public int playerHitCounter = 0;
         
         public void Start()
         {
-            size = new Cell(11, 11);// the actual size of the field is for 1 cell smaller than this number)))
             cellCoord = new Cell[size.x, size.y*2+1];
             DrawTwoFields();
             SetFlotilia(false);
@@ -50,7 +48,7 @@ namespace SeaBattle
         {
             Random rand = new Random();
             int x = rand.Next(2, 12);
-            int y = rand.Next(size.y + 1, size.y * 2 + 2);
+            int y = rand.Next(size.y + 2, size.y * 2 + 2);
             if (cellCoord[x, y].isFree)
             {
                 PaintCell(x, y, ConsoleColor.Green, " ", ConsoleColor.Green);
@@ -349,7 +347,7 @@ namespace SeaBattle
             Console.SetCursorPosition(x, y);
             Console.BackgroundColor = color;
             Console.ForegroundColor = symbolColor;
-            cell = symbol == " " ? new Cell(true) : new Cell(false);
+            Cell cell = symbol == " " ? new Cell(true) : new Cell(false);
             cellCoord[x, y] = cell;
             Console.Write(symbol);
             Console.ResetColor();
