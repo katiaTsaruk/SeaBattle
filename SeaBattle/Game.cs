@@ -17,7 +17,7 @@ namespace SeaBattle
             DrawTwoFields();
             SetFlotilia(false);
             SetFlotilia(true);
-            while (player2HitCounter != shipCellNum/2 || player1HitCounter != shipCellNum/2)
+            while (player2HitCounter != shipCellNum/2 && player1HitCounter != shipCellNum/2)
             {
                 Shoot();
             }
@@ -53,8 +53,8 @@ namespace SeaBattle
             }
             else
             { 
-                x = rand.Next(2, 11);
-                y = rand.Next(size.y + 3, size.y * 2 + 1);
+                x = rand.Next(1, 11);
+                y = rand.Next(size.y + 2, size.y * 2 + 1);
             }
 
             if (cellCoord[x, y].isFree)
@@ -165,7 +165,7 @@ namespace SeaBattle
             for (int i = 0; i < length; i++)
             {
                 PaintCell(Console.CursorLeft, Console.CursorTop, ConsoleColor.White, ShipSymbol);
-                cellCoord[Console.CursorLeft-2, Console.CursorTop-1].isFree = false;
+                cellCoord[Console.CursorLeft-1, Console.CursorTop].isFree = false;
             }
         }
         public void CreateLongColumnShip(int length,  string ShipSymbol)
@@ -174,7 +174,7 @@ namespace SeaBattle
             for (int i = 0; i < length; i++)
             {
                 PaintCell(x, Console.CursorTop+1, ConsoleColor.White, ShipSymbol);
-                cellCoord[Console.CursorLeft-2, Console.CursorTop-1].isFree = false;
+                cellCoord[Console.CursorLeft-1, Console.CursorTop].isFree = false;
             }
         }
 
@@ -307,7 +307,7 @@ namespace SeaBattle
         {
             Console.SetCursorPosition(x, y);
             Console.BackgroundColor = color;
-            Cell cell = symbol == " " ? new Cell(true) : new Cell(false);
+            Cell cell = new Cell(true);
             cellCoord[x, y] = cell;
             Console.Write(symbol);
             Console.ResetColor();
