@@ -264,22 +264,22 @@ namespace SeaBattle
         }
         public bool IsCellFree(int x, int y)
         {
-            bool isCellFree=cellCoord[x-1, y-1].isFree;;
+            bool isCellFree=cellCoord[x, y].isFree;;
             if (x < size.x && isCellFree)
             {
-                isCellFree = cellCoord[x, y-1].isFree;
+                isCellFree = cellCoord[x+1, y].isFree;
             }
             if (x > 2 && isCellFree)
             {
-                isCellFree = cellCoord[x-2, y-1].isFree;
+                isCellFree = cellCoord[x-1, y].isFree;
             }
             if (y != 2 && y != size.y + 3 && isCellFree) 
             {
-                isCellFree = cellCoord[x-1, y-2].isFree;
+                isCellFree = cellCoord[x, y-1].isFree;
             }
             if (y != size.y && y != size.y * 2 + 1 && isCellFree) 
             {
-                isCellFree = cellCoord[x-1, y].isFree;
+                isCellFree = cellCoord[x, y+1].isFree;
             }
             return isCellFree;
         }
