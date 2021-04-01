@@ -6,9 +6,10 @@ namespace SeaBattle
     { // можно сделать управление стрелочками для расстановки кораблей и подсвечивать возможные варианты клеточек 
         private (int x, int y) size= (11, 11);// the actual size of the field is for 1 cell smaller than this number)))
         private Cell[,] cellCoord;
-        public bool isPlayersTurn=true;
-        public int compHitCounter = 0;
-        public int playerHitCounter = 0;
+        public bool isPlayer1Turn=true;
+        public int player2HitCounter = 0;
+        public int player1HitCounter = 0;
+        public int shipCellNum=0;
         
         public void Start()
         {
@@ -16,16 +17,9 @@ namespace SeaBattle
             DrawTwoFields();
             SetFlotilia(false);
             SetFlotilia(true);
-            while (compHitCounter != 20 || playerHitCounter != 20)
+            while (player2HitCounter != shipCellNum/2 || player1HitCounter != shipCellNum/2)
             {
-                if (isPlayersTurn)
-                {
-                    PlayerShoot();
-                }
-                else
-                {
-                    ComputerShoot();
-                }
+                Shoot();
             }
             EndGame();
             //WriteRules();
@@ -33,96 +27,93 @@ namespace SeaBattle
 
         public void EndGame()
         {
-            if (compHitCounter == 20)
+            if (player2HitCounter == shipCellNum/2)
             {
                 Console.SetCursorPosition(1,size.y*2+2);
-                Console.WriteLine("Computer wins!");
+                Console.WriteLine("Player 2 wins!");
             }
             else
             {
                 Console.SetCursorPosition(1,size.y*2+2);
-                Console.WriteLine("You win!");
+                Console.WriteLine("Player 1 wins!");
             }
         }
-        public void ComputerShoot()
-        {
-            Random rand = new Random();
-            int x = rand.Next(2, 12);
-            int y = rand.Next(size.y + 2, size.y * 2 + 2);
-            if (cellCoord[x, y].isFree)
-            {
-                PaintCell(x, y, ConsoleColor.Green, " ", ConsoleColor.Green);
-                Console.SetCursorPosition(1,size.y*2+2);
-                Console.WriteLine("Computer missed");
-                Console.Write("Press ENTER to continue");
-                Console.ReadLine();
-                ClearLine(1);
-                ClearLine(2);
-                isPlayersTurn = true;
-            }
-            else
-            {
-                PaintCell(x, y, ConsoleColor.Red, "#", ConsoleColor.Black);
-                Console.SetCursorPosition(1,size.y*2+2);
-                Console.WriteLine("Computer hits your ship!");
-                Console.Write("Press ENTER to continue");
-                Console.ReadLine();
-                ClearLine(1);
-                ClearLine(2);
-                compHitCounter++;
-                isPlayersTurn = false;
-            }
-        }
-        public void PlayerShoot()
+
+        public void Shoot()
         {
             Console.SetCursorPosition(1,size.y*2+2);
-            Console.WriteLine("Your turn");
-            int x= GetShootX()+1;
-            int y =GetShootY()+1;
-            ClearLine(1);
-            ClearLine(2);
-            ClearLine(2);
-            
-            if (cellCoord[x,y].isFree)
+            Random rand = new Random();
+            int x, y;
+            if (isPlayer1Turn)
             {
-                PaintCell(x, y, ConsoleColor.Green, " ", ConsoleColor.Green);
+                x = GetShootCoord(true)+1;
+                y = GetShootCoord(false)+1;
+                ClearLine(1);
+                ClearLine(2);
+            }
+            else
+            { 
+                x = rand.Next(2, 11);
+                y = rand.Next(size.y + 3, size.y * 2 + 1);
+            }
+
+            if (cellCoord[x, y].isFree)
+            {
+                PaintCell(x, y, ConsoleColor.Green, " ");
                 Console.SetCursorPosition(1,size.y*2+2);
-                Console.WriteLine("This cell is free(");
+                Console.WriteLine("Miss");
                 Console.Write("Press ENTER to continue");
                 Console.ReadLine();
                 ClearLine(1);
                 ClearLine(2);
-                isPlayersTurn = false;
+                isPlayer1Turn = !isPlayer1Turn;
             }
             else
             {
-                PaintCell(x, y, ConsoleColor.Red, "#", ConsoleColor.Black);
-                Console.SetCursorPosition(1,size.y*2+2);
-                Console.Write("You find a ship!");
+                PaintCell(x, y, ConsoleColor.Red, "#");
+                Console.SetCursorPosition(1, size.y * 2 + 2);
+                Console.WriteLine("Hit");
                 Console.Write("Press ENTER to continue");
                 Console.ReadLine();
                 ClearLine(1);
                 ClearLine(2);
-                playerHitCounter++;
-                isPlayersTurn = true;
+                if (!isPlayer1Turn)
+                {
+                    player2HitCounter++;
+                }
+                else
+                {
+                    player1HitCounter++;
+                }
             }
         }
-        
-        public int GetShootX()
+        public int GetShootCoord(bool isXAxis)
         {
-            int shootX=10;
+            string axis;
+            int maxCoord;
+            if (isXAxis)
+            {
+                axis = "x";
+                maxCoord = size.x-2;
+            }
+            else
+            {
+                axis = "y";
+                maxCoord=size.y-2;
+            }
+            int shootCoord=10;
             bool isCorrect = false;
-            Console.Write("Write x coordinate of the cell(0-9), you want to shoot: ");
+            Console.Write($"Write {axis} coordinate of the cell(0-{maxCoord}), you want to shoot: ");
             while (!isCorrect)
             {
-                while (!int.TryParse(Console.ReadLine(), out shootX))
+                while (!int.TryParse(Console.ReadLine(), out shootCoord))
                 {
                     ClearLine(1);
                     Console.SetCursorPosition(1, Console.CursorTop - 1);
                     Console.Write("Are you an Idiot? Please write a number: ");
                 }
 
-                if (shootX >= 0 && shootX <= 9)
+                if (shootCoord >= 0 && shootCoord <= maxCoord)
                 {
                     isCorrect = true;
                 }
@@ -131,45 +122,17 @@ namespace SeaBattle
                     isCorrect = false;
                     ClearLine(1);
                     Console.SetCursorPosition(1, Console.CursorTop - 1);
-                    Console.Write("Are you an Idiot? The number between 0 and 9: ");
+                    Console.Write($"Are you an Idiot? The number between 0 and {maxCoord}: ");
                 }
             }
-            return shootX;
+            return shootCoord;
         }
-        public int GetShootY()
-        {
-            int shootY=10;
-            bool isCorrect = false;
-            Console.Write("Write y coordinate of the cell(0-9), you want to shoot: ");
-            while (!isCorrect)
-            {
-                while (!int.TryParse(Console.ReadLine(), out shootY))
-                {
-                    ClearLine(1);
-                    Console.SetCursorPosition(1, Console.CursorTop - 1);
-                    Console.Write("Are you an Idiot? Please write a number: ");
-                }
 
-                if (shootY >= 0 && shootY <= 9)
-                {
-                    isCorrect = true;
-                }
-                else
-                {
-                    isCorrect = false;
-                    ClearLine(1);
-                    Console.SetCursorPosition(1, Console.CursorTop - 1);
-                    Console.Write("Are you an Idiot? The number between 0 and 9: ");
-                }
-            }
-            return shootY;
-        }
-        
         public void DrawTwoFields()
         {
             DrawField(0);
             Console.WriteLine("");
-            Console.WriteLine("Computer");
+            Console.WriteLine("Player 2");
             DrawField(size.y+1);
             GetWriteName();
         }
@@ -192,45 +155,43 @@ namespace SeaBattle
             {
                 for (int j = 1+extraDistance; j < size.y+extraDistance; j++)
                 {
-                    PaintCell(i,j,ConsoleColor.White," ",ConsoleColor.White);
+                    PaintCell(i,j,ConsoleColor.White," ");
                 }
             }
         }
 
-        public void CreateLongRowShip(int length, ConsoleColor ShipColor, string ShipSymbol)
+        public void CreateLongRowShip(int length, string ShipSymbol)
         {
             for (int i = 0; i < length; i++)
             {
-                PaintCell(Console.CursorLeft, Console.CursorTop, ConsoleColor.White, ShipSymbol, ShipColor);
-                cellCoord[Console.CursorLeft-1, Console.CursorTop].isFree = false;
+                PaintCell(Console.CursorLeft, Console.CursorTop, ConsoleColor.White, ShipSymbol);
+                cellCoord[Console.CursorLeft-2, Console.CursorTop-1].isFree = false;
             }
         }
-        public void CreateLongColumnShip(int length, ConsoleColor ShipColor, string ShipSymbol)
+        public void CreateLongColumnShip(int length,  string ShipSymbol)
         {
             int x = Console.CursorLeft;
             for (int i = 0; i < length; i++)
             {
-                PaintCell(x, Console.CursorTop+1, ConsoleColor.White, ShipSymbol, ShipColor);
-                cellCoord[Console.CursorLeft-1, Console.CursorTop].isFree = false;
+                PaintCell(x, Console.CursorTop+1, ConsoleColor.White, ShipSymbol);
+                cellCoord[Console.CursorLeft-2, Console.CursorTop-1].isFree = false;
             }
         }
 
         public void SpawnShips(int length, int amount, bool isSecondField)
         {
+            shipCellNum += length * amount;
             Random rand = new Random();
             int dopHeight;
-            ConsoleColor shipColor;
             string shipSymbol;
             if (isSecondField)
             {
                 dopHeight = size.y + 1;
-                shipColor = ConsoleColor.Black;
                 shipSymbol = "#";
             }
             else
             {
                 dopHeight = 0;
-                shipColor = ConsoleColor.White;
                 shipSymbol = " ";
             }
 
@@ -241,11 +202,11 @@ namespace SeaBattle
                 {
                     if (IsPlaceFree(Console.CursorLeft, Console.CursorTop, length, true))
                     {
-                        CreateLongRowShip(length, shipColor, shipSymbol);
+                        CreateLongRowShip(length,  shipSymbol);
                     }
                     else if (IsPlaceFree(Console.CursorLeft, Console.CursorTop, length, false))
                     {
-                        CreateLongColumnShip(length, shipColor, shipSymbol);
+                        CreateLongColumnShip(length, shipSymbol);
                     }
                     else
                     {
@@ -256,11 +217,11 @@ namespace SeaBattle
                 {
                     if (IsPlaceFree(Console.CursorLeft, Console.CursorTop, length, false))
                     {
-                        CreateLongColumnShip(length, shipColor, shipSymbol);
+                        CreateLongColumnShip(length, shipSymbol);
                     }
                     else if (IsPlaceFree(Console.CursorLeft, Console.CursorTop, length, true))
                     {
-                        CreateLongRowShip(length, shipColor, shipSymbol);
+                        CreateLongRowShip(length, shipSymbol);
                     }
                     else
                     {
@@ -303,22 +264,22 @@ namespace SeaBattle
         }
         public bool IsCellFree(int x, int y)
         {
-            bool isCellFree=cellCoord[x, y].isFree;;
+            bool isCellFree=cellCoord[x-1, y-1].isFree;;
             if (x < size.x && isCellFree)
-            {
-                isCellFree = cellCoord[x+1, y].isFree;
-            }
-            if (x > 2 && isCellFree)
-            {
-                isCellFree = cellCoord[x-1, y].isFree;
-            }
-            if (y != 2 && y != size.y + 3 && isCellFree) 
             {
                 isCellFree = cellCoord[x, y-1].isFree;
             }
+            if (x > 2 && isCellFree)
+            {
+                isCellFree = cellCoord[x-2, y-1].isFree;
+            }
+            if (y != 2 && y != size.y + 3 && isCellFree) 
+            {
+                isCellFree = cellCoord[x-1, y-2].isFree;
+            }
             if (y != size.y && y != size.y * 2 + 1 && isCellFree) 
             {
-                isCellFree = cellCoord[x, y+1].isFree;
+                isCellFree = cellCoord[x-1, y].isFree;
             }
             return isCellFree;
         }
@@ -336,17 +297,16 @@ namespace SeaBattle
         public void GetWriteName()
         {
             Console.WriteLine("");
-            Console.Write("Enter yor name: ");
+            Console.Write("Player 1, enter yor name: ");
             string name = Console.ReadLine();
             ClearLine(1);
             Console.SetCursorPosition(0, Console.CursorTop-1);
             Console.Write(name);
         }
-        public void PaintCell(int x, int y, ConsoleColor color,string symbol,ConsoleColor symbolColor)
+        public void PaintCell(int x, int y, ConsoleColor color,string symbol)
         {
             Console.SetCursorPosition(x, y);
             Console.BackgroundColor = color;
-            Console.ForegroundColor = symbolColor;
             Cell cell = symbol == " " ? new Cell(true) : new Cell(false);
             cellCoord[x, y] = cell;
             Console.Write(symbol);
