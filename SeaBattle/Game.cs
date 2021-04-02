@@ -1,28 +1,112 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SeaBattle
 {
     public class Game
-    { // можно сделать управление стрелочками для расстановки кораблей и подсвечивать возможные варианты клеточек 
+    {   // можно сделать управление стрелочками для расстановки кораблей и подсвечивать возможные варианты клеточек 
+        // можно сделать проверку на то ходили ли уже в эту клетку
+        // ии после попадания ходит в соседние клетки и не ходит в те же
+        
         private (int x, int y) size= (11, 11);// the actual size of the field is for 1 cell smaller than this number)))
         private Cell[,] cellCoord;
         public bool isPlayer1Turn=true;
         public int player2HitCounter = 0;
         public int player1HitCounter = 0;
         public int shipCellNum=0;
-        
+        public int gameMode;
+        public string[] playerNames=new string[2];
+
         public void Start()
         {
             cellCoord = new Cell[size.x, size.y*2+1];
+            StartLobby();
+            Console.SetCursorPosition(0, 0);
             DrawTwoFields();
             SetFlotilia(false);
             SetFlotilia(true);
+            Update();
+            EndGame();
+        }
+
+        public void Update()
+        {
             while (player2HitCounter != shipCellNum/2 && player1HitCounter != shipCellNum/2)
             {
+                WriteScore();
+                WriteWhoseTurn();
                 Shoot();
             }
-            EndGame();
-            //WriteRules();
+        }
+
+        public void WriteWhoseTurn()
+        {
+            int playerNumber;
+            if (isPlayer1Turn)
+            {
+                playerNumber = 1;
+            }
+            else
+            {
+                playerNumber = 0;
+            }
+
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.SetCursorPosition(0, size.y*2+4);
+            ClearLine(0);
+            Console.SetCursorPosition(0, size.y*2+4);
+            Console.WriteLine($"{playerNames[playerNumber]} turn");
+            Console.ResetColor();
+        }
+
+        public void WriteScore()
+        {
+            Console.SetCursorPosition(0, size.y*2+5);
+            Console.WriteLine($"{playerNames[0]} score: {player1HitCounter}");
+            Console.WriteLine($"{playerNames[1]} score: {player2HitCounter}");
+        }
+
+        public void StartLobby()
+        {
+            Console.WriteLine("Hello! Welcome into my game");
+            Console.WriteLine("You have an opportunity to choose game mode:");
+            Console.WriteLine("1- bot+bot game");
+            Console.WriteLine("2- bot+human game");
+            Console.WriteLine("3- human+human game");
+            Console.Write("Write a number(1-3) to choose: ");
+            GetGameMode();
+            ClearLine(1);
+            ClearLine(2);
+            ClearLine(2);
+            ClearLine(2);
+            ClearLine(2);
+            ClearLine(2);
+        }
+
+        public void GetGameMode()
+        {
+            bool isCorrect = false;
+            while (!isCorrect)
+            {
+                while (!int.TryParse(Console.ReadLine(), out gameMode))
+                {
+                    ClearLine(1);
+                    Console.SetCursorPosition(1, Console.CursorTop - 1);
+                    Console.Write("Are you an Idiot? Please write a number: ");
+                }
+
+                if (gameMode >= 1 && gameMode <= 3)
+                {
+                    isCorrect = true;
+                }
+                else
+                {
+                    isCorrect = false;
+                    ClearLine(1);
+                    Console.SetCursorPosition(1, Console.CursorTop - 1);
+                    Console.Write("Are you an Idiot? The number between 1 and 3: ");
+                }
+            }
         }
 
         public void EndGame()
@@ -46,15 +130,33 @@ namespace SeaBattle
             int x, y;
             if (isPlayer1Turn)
             {
-                x = GetShootCoord(true)+1;
-                y = GetShootCoord(false)+1;
-                ClearLine(1);
-                ClearLine(2);
+                if (gameMode == 2 || gameMode == 3)
+                {
+                    x = GetShootCoord(true) + 1;
+                    y = GetShootCoord(false) + 1;
+                    ClearLine(1);
+                    ClearLine(2);
+                }
+                else
+                {
+                    x = rand.Next(1, size.x);
+                    y = rand.Next(1, size.y);
+                }
             }
             else
             { 
-                x = rand.Next(1, 11);
-                y = rand.Next(size.y + 2, size.y * 2 + 1);
+                if (gameMode == 3)
+                {
+                    x = GetShootCoord(true) + 1;
+                    y = GetShootCoord(false) + size.y+2;
+                    ClearLine(1);
+                    ClearLine(2);
+                }
+                else
+                {
+                    x = rand.Next(1, size.x);
+                    y = rand.Next(size.y + 2, size.y * 2 + 1);
+                }
             }
 
             if (cellCoord[x, y].isFree)
@@ -132,9 +234,26 @@ namespace SeaBattle
         {
             DrawField(0);
             Console.WriteLine("");
-            Console.WriteLine("Player 2");
+            if (gameMode !=3)
+            {
+                playerNames[0] = "Bot 1";
+                Console.WriteLine(playerNames[0]);
+            }
+            else
+            {
+                Console.WriteLine(GetWriteName(0));
+            }
             DrawField(size.y+1);
-            GetWriteName();
+            Console.WriteLine("");
+            if (gameMode ==1)
+            {
+                playerNames[1] = "Bot 2";
+                Console.WriteLine(playerNames[1]);
+            }
+            else
+            {
+                Console.WriteLine(GetWriteName(1));
+            }
         }
 
         public void DrawField(int extraDistance)
@@ -192,7 +311,7 @@ namespace SeaBattle
             else
             {
                 dopHeight = 0;
-                shipSymbol = " ";
+                shipSymbol = "@";
             }
 
             for (int i = 0; i < amount; i++)
@@ -283,25 +402,19 @@ namespace SeaBattle
             }
             return isCellFree;
         }
-        public void WriteRules() // need to be finished
-        {
-            Console.WriteLine("");
-        }
-
         public void ClearLine(int minusY)
         {
             Console.SetCursorPosition(0, Console.CursorTop-minusY);
             Console.Write(new String(' ', Console.BufferWidth));
         }
 
-        public void GetWriteName()
+        public string GetWriteName(int playerNumber)
         {
-            Console.WriteLine("");
-            Console.Write("Player 1, enter yor name: ");
-            string name = Console.ReadLine();
+            Console.Write("Enter your name: ");
+            playerNames[playerNumber]=Console.ReadLine();
             ClearLine(1);
             Console.SetCursorPosition(0, Console.CursorTop-1);
-            Console.Write(name);
+            return playerNames[playerNumber];
         }
         public void PaintCell(int x, int y, ConsoleColor color,string symbol)
         {

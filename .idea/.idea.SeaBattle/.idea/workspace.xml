@@ -22,6 +22,7 @@
       <option value="$PROJECT_DIR$/SeaBattle/GameLogic.cs" />
       <option value="$PROJECT_DIR$/SeaBattle/Program.cs" />
       <option value="$PROJECT_DIR$/SeaBattle/Cell.cs" />
+      <option value="$PROJECT_DIR$/SeaBattle/Player.cs" />
       <option value="$PROJECT_DIR$/SeaBattle/Game.cs" />
     </changedPaths>
   </component>
@@ -73,6 +74,7 @@
       <workItem from="1617011904324" duration="59000" />
       <workItem from="1617128551024" duration="5466000" />
       <workItem from="1617167677838" duration="17194000" />
+      <workItem from="1617346477501" duration="11373000" />
     </task>
     <servers />
   </component>
