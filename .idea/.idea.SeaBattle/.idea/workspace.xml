@@ -7,6 +7,7 @@
     <list default="true" id="3de34b6a-b216-4c74-bf40-41a1b014deab" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SeaBattle/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SeaBattle/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SeaBattle/Game.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SeaBattle/Game.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SeaBattle/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SeaBattle/Program.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,9 +21,9 @@
     <changedPaths>
       <option value="$PROJECT_DIR$/SeaBattle/CoordSystem.cs" />
       <option value="$PROJECT_DIR$/SeaBattle/GameLogic.cs" />
-      <option value="$PROJECT_DIR$/SeaBattle/Program.cs" />
       <option value="$PROJECT_DIR$/SeaBattle/Cell.cs" />
       <option value="$PROJECT_DIR$/SeaBattle/Player.cs" />
+      <option value="$PROJECT_DIR$/SeaBattle/Program.cs" />
       <option value="$PROJECT_DIR$/SeaBattle/Game.cs" />
     </changedPaths>
   </component>
@@ -74,7 +75,7 @@
       <workItem from="1617011904324" duration="59000" />
       <workItem from="1617128551024" duration="5466000" />
       <workItem from="1617167677838" duration="17194000" />
-      <workItem from="1617346477501" duration="11373000" />
+      <workItem from="1617346477501" duration="15728000" />
     </task>
     <servers />
   </component>

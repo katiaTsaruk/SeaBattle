@@ -7,7 +7,11 @@ namespace SeaBattle
         public static void Main(string[] args)
         { 
             Game game = new Game();
-            game.Start();
+            while (game.currentGameNumber <= game.gameAmount)
+            {
+                game.Start();
+            }
+            
         }
     }
 } 

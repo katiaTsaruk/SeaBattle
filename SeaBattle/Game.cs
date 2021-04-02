@@ -11,27 +11,59 @@ namespace SeaBattle
         private (int x, int y) size= (11, 11);// the actual size of the field is for 1 cell smaller than this number)))
         private Cell[,] cellCoord;
         public bool isPlayer1Turn=true;
-        public int player2HitCounter = 0;
+        public int player0HitCounter = 0;
         public int player1HitCounter = 0;
+        public int player0WinCounter = 0;
+        public int player1WinCounter = 0;
         public int shipCellNum=0;
         public int gameMode;
         public string[] playerNames=new string[2];
+        public int gameAmount=1;
+        public int currentGameNumber = 1;
 
         public void Start()
         {
             cellCoord = new Cell[size.x, size.y*2+1];
-            StartLobby();
+            if (currentGameNumber == 1)
+            {
+                StartLobby();
+            }
             Console.SetCursorPosition(0, 0);
             DrawTwoFields();
+            WriteMatchStatus();
             SetFlotilia(false);
             SetFlotilia(true);
             Update();
             EndGame();
+            PrepareNextGame();
+        }
+
+        public void WriteMatchStatus()
+        {
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
+            Console.SetCursorPosition(size.x + 5, 0);
+            Console.Write($"Game {currentGameNumber}/{gameAmount}");
+            Console.SetCursorPosition(size.x + 5, 1);
+            Console.Write($"Amount of {playerNames[0]} wins: {player0WinCounter}");
+            Console.SetCursorPosition(size.x + 5, 2);
+            Console.Write($"Amount of {playerNames[1]} wins: {player1WinCounter}");
+            Console.ResetColor();
+        }
+
+        public void PrepareNextGame()
+        {
+            currentGameNumber++;
+            Console.Write("Press ENTER to continue");
+            Console.ReadLine();
+            Console.Clear();
+            isPlayer1Turn = true;
+            player0HitCounter = 0;
+            player1HitCounter = 0;
         }
 
         public void Update()
         {
-            while (player2HitCounter != shipCellNum/2 && player1HitCounter != shipCellNum/2)
+            while (player0HitCounter != shipCellNum/2 && player1HitCounter != shipCellNum/2)
             {
                 WriteScore();
                 WriteWhoseTurn();
@@ -63,11 +95,22 @@ namespace SeaBattle
         {
             Console.SetCursorPosition(0, size.y*2+5);
             Console.WriteLine($"{playerNames[0]} score: {player1HitCounter}");
-            Console.WriteLine($"{playerNames[1]} score: {player2HitCounter}");
+            Console.WriteLine($"{playerNames[1]} score: {player0HitCounter}");
+        }
+
+        public void GetGameAmount()
+        {
+            if (!int.TryParse(Console.ReadLine(), out gameAmount))
+            {
+                ClearLine(1);
+                Console.SetCursorPosition(1, Console.CursorTop - 1);
+                Console.Write("Are you an Idiot? Please write a number: ");
+            }
         }
 
         public void StartLobby()
         {
+            Console.SetCursorPosition(0, 0);
             Console.WriteLine("Hello! Welcome into my game");
             Console.WriteLine("You have an opportunity to choose game mode:");
             Console.WriteLine("1- bot+bot game");
@@ -75,12 +118,11 @@ namespace SeaBattle
             Console.WriteLine("3- human+human game");
             Console.Write("Write a number(1-3) to choose: ");
             GetGameMode();
-            ClearLine(1);
-            ClearLine(2);
-            ClearLine(2);
-            ClearLine(2);
-            ClearLine(2);
-            ClearLine(2);
+            Console.Write("Enter amount of matches, you want to play: ");
+            GetGameAmount();
+            Console.Write("Press ENTER to continue");
+            Console.ReadLine();
+            Console.Clear();
         }
 
         public void GetGameMode()
@@ -111,15 +153,18 @@ namespace SeaBattle
 
         public void EndGame()
         {
-            if (player2HitCounter == shipCellNum/2)
+            if (player0HitCounter == shipCellNum/2)
             {
+
+                player0WinCounter ++;
                 Console.SetCursorPosition(1,size.y*2+2);
-                Console.WriteLine("Player 2 wins!");
+                Console.WriteLine($"{playerNames[0]} wins!");
             }
             else
             {
+                player1HitCounter++;
                 Console.SetCursorPosition(1,size.y*2+2);
-                Console.WriteLine("Player 1 wins!");
+                Console.WriteLine($"{playerNames[1]} wins!");
             }
         }
 
@@ -181,7 +226,7 @@ namespace SeaBattle
                 ClearLine(2);
                 if (!isPlayer1Turn)
                 {
-                    player2HitCounter++;
+                    player0HitCounter++;
                 }
                 else
                 {
@@ -241,7 +286,14 @@ namespace SeaBattle
             }
             else
             {
-                Console.WriteLine(GetWriteName(0));
+                if (currentGameNumber == 1)
+                {
+                    Console.WriteLine(GetWriteName(0));
+                }
+                else
+                {
+                    Console.WriteLine(playerNames[0]);
+                }
             }
             DrawField(size.y+1);
             Console.WriteLine("");
@@ -252,7 +304,14 @@ namespace SeaBattle
             }
             else
             {
-                Console.WriteLine(GetWriteName(1));
+                if (currentGameNumber == 1)
+                {
+                    Console.WriteLine(GetWriteName(1));
+                }
+                else
+                {
+                    Console.WriteLine(playerNames[1]);
+                }
             }
         }
 
