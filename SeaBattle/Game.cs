@@ -8,29 +8,21 @@ namespace SeaBattle
         // можно сделать проверку на то ходили ли уже в эту клетку
         // ии после попадания ходит в соседние клетки и не ходит в те же
         
-        private (int x, int y) size= (11, 11);// the actual size of the field is for 1 cell smaller than this number)))
+        private Lobby lobby = new Lobby();
+        private DrawField drawField = new DrawField();
         private Cell[,] cellCoord;
+        
+        private (int x, int y) size= (11, 11);// the actual size of the field is for 1 cell smaller than this number)))
         public bool isPlayer1Turn=true;
         public int player0HitCounter = 0;
         public int player1HitCounter = 0;
-        public int player0WinCounter = 0;
-        public int player1WinCounter = 0;
         public int shipCellNum=0;
-        public int gameMode;
-        public string[] playerNames=new string[2];
-        public int gameAmount=1;
-        public int currentGameNumber = 1;
 
         public void Start()
         {
             cellCoord = new Cell[size.x, size.y*2+1];
-            if (currentGameNumber == 1)
-            {
-                StartLobby();
-            }
             Console.SetCursorPosition(0, 0);
             DrawTwoFields();
-            WriteMatchStatus();
             SetFlotilia(false);
             SetFlotilia(true);
             Update();
@@ -38,21 +30,10 @@ namespace SeaBattle
             PrepareNextGame();
         }
 
-        public void WriteMatchStatus()
-        {
-            Console.ForegroundColor = ConsoleColor.DarkMagenta;
-            Console.SetCursorPosition(size.x + 5, 0);
-            Console.Write($"Game {currentGameNumber}/{gameAmount}");
-            Console.SetCursorPosition(size.x + 5, 1);
-            Console.Write($"Amount of {playerNames[0]} wins: {player0WinCounter}");
-            Console.SetCursorPosition(size.x + 5, 2);
-            Console.Write($"Amount of {playerNames[1]} wins: {player1WinCounter}");
-            Console.ResetColor();
-        }
+        
 
         public void PrepareNextGame()
         {
-            currentGameNumber++;
             Console.Write("Press ENTER to continue");
             Console.ReadLine();
             Console.Clear();
@@ -85,70 +66,17 @@ namespace SeaBattle
 
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.SetCursorPosition(0, size.y*2+4);
-            ClearLine(0);
+            drawField.ClearLine(0);
             Console.SetCursorPosition(0, size.y*2+4);
-            Console.WriteLine($"{playerNames[playerNumber]} turn");
+            Console.WriteLine($"{lobby.playerNames[playerNumber]} turn");
             Console.ResetColor();
         }
 
         public void WriteScore()
         {
             Console.SetCursorPosition(0, size.y*2+5);
-            Console.WriteLine($"{playerNames[0]} score: {player1HitCounter}");
-            Console.WriteLine($"{playerNames[1]} score: {player0HitCounter}");
-        }
-
-        public void GetGameAmount()
-        {
-            if (!int.TryParse(Console.ReadLine(), out gameAmount))
-            {
-                ClearLine(1);
-                Console.SetCursorPosition(1, Console.CursorTop - 1);
-                Console.Write("Are you an Idiot? Please write a number: ");
-            }
-        }
-
-        public void StartLobby()
-        {
-            Console.SetCursorPosition(0, 0);
-            Console.WriteLine("Hello! Welcome into my game");
-            Console.WriteLine("You have an opportunity to choose game mode:");
-            Console.WriteLine("1- bot+bot game");
-            Console.WriteLine("2- bot+human game");
-            Console.WriteLine("3- human+human game");
-            Console.Write("Write a number(1-3) to choose: ");
-            GetGameMode();
-            Console.Write("Enter amount of matches, you want to play: ");
-            GetGameAmount();
-            Console.Write("Press ENTER to continue");
-            Console.ReadLine();
-            Console.Clear();
-        }
-
-        public void GetGameMode()
-        {
-            bool isCorrect = false;
-            while (!isCorrect)
-            {
-                while (!int.TryParse(Console.ReadLine(), out gameMode))
-                {
-                    ClearLine(1);
-                    Console.SetCursorPosition(1, Console.CursorTop - 1);
-                    Console.Write("Are you an Idiot? Please write a number: ");
-                }
-
-                if (gameMode >= 1 && gameMode <= 3)
-                {
-                    isCorrect = true;
-                }
-                else
-                {
-                    isCorrect = false;
-                    ClearLine(1);
-                    Console.SetCursorPosition(1, Console.CursorTop - 1);
-                    Console.Write("Are you an Idiot? The number between 1 and 3: ");
-                }
-            }
+            Console.WriteLine($"{lobby.playerNames[0]} score: {player0HitCounter}");
+            Console.WriteLine($"{lobby.playerNames[1]} score: {player1HitCounter}");
         }
 
         public void EndGame()
@@ -156,15 +84,15 @@ namespace SeaBattle
             if (player0HitCounter == shipCellNum/2)
             {
 
-                player0WinCounter ++;
+                lobby.player0WinCounter ++;
                 Console.SetCursorPosition(1,size.y*2+2);
-                Console.WriteLine($"{playerNames[0]} wins!");
+                Console.WriteLine($"{lobby.playerNames[0]} wins!");
             }
             else
             {
                 player1HitCounter++;
                 Console.SetCursorPosition(1,size.y*2+2);
-                Console.WriteLine($"{playerNames[1]} wins!");
+                Console.WriteLine($"{lobby.playerNames[1]} wins!");
             }
         }
 
@@ -175,12 +103,12 @@ namespace SeaBattle
             int x, y;
             if (isPlayer1Turn)
             {
-                if (gameMode == 2 || gameMode == 3)
+                if (lobby.gameMode == 2 || lobby.gameMode == 3)
                 {
                     x = GetShootCoord(true) + 1;
                     y = GetShootCoord(false) + 1;
-                    ClearLine(1);
-                    ClearLine(2);
+                    drawField.ClearLine(1);
+                    drawField.ClearLine(2);
                 }
                 else
                 {
@@ -190,12 +118,12 @@ namespace SeaBattle
             }
             else
             { 
-                if (gameMode == 3)
+                if (lobby.gameMode == 3)
                 {
                     x = GetShootCoord(true) + 1;
                     y = GetShootCoord(false) + size.y+2;
-                    ClearLine(1);
-                    ClearLine(2);
+                    drawField.ClearLine(1);
+                    drawField.ClearLine(2);
                 }
                 else
                 {
@@ -211,8 +139,8 @@ namespace SeaBattle
                 Console.WriteLine("Miss");
                 Console.Write("Press ENTER to continue");
                 Console.ReadLine();
-                ClearLine(1);
-                ClearLine(2);
+                drawField.ClearLine(1);
+                drawField.ClearLine(2);
                 isPlayer1Turn = !isPlayer1Turn;
             }
             else
@@ -222,8 +150,8 @@ namespace SeaBattle
                 Console.WriteLine("Hit");
                 Console.Write("Press ENTER to continue");
                 Console.ReadLine();
-                ClearLine(1);
-                ClearLine(2);
+                drawField.ClearLine(1);
+                drawField.ClearLine(2);
                 if (!isPlayer1Turn)
                 {
                     player0HitCounter++;
@@ -255,7 +183,7 @@ namespace SeaBattle
             {
                 while (!int.TryParse(Console.ReadLine(), out shootCoord))
                 {
-                    ClearLine(1);
+                    drawField.ClearLine(1);
                     Console.SetCursorPosition(1, Console.CursorTop - 1);
                     Console.Write("Are you an Idiot? Please write a number: ");
                 }
@@ -267,7 +195,7 @@ namespace SeaBattle
                 else
                 {
                     isCorrect = false;
-                    ClearLine(1);
+                    drawField.ClearLine(1);
                     Console.SetCursorPosition(1, Console.CursorTop - 1);
                     Console.Write($"Are you an Idiot? The number between 0 and {maxCoord}: ");
                 }
@@ -279,40 +207,10 @@ namespace SeaBattle
         {
             DrawField(0);
             Console.WriteLine("");
-            if (gameMode !=3)
-            {
-                playerNames[0] = "Bot 1";
-                Console.WriteLine(playerNames[0]);
-            }
-            else
-            {
-                if (currentGameNumber == 1)
-                {
-                    Console.WriteLine(GetWriteName(0));
-                }
-                else
-                {
-                    Console.WriteLine(playerNames[0]);
-                }
-            }
+            Console.WriteLine(lobby.playerNames[0]);
             DrawField(size.y+1);
             Console.WriteLine("");
-            if (gameMode ==1)
-            {
-                playerNames[1] = "Bot 2";
-                Console.WriteLine(playerNames[1]);
-            }
-            else
-            {
-                if (currentGameNumber == 1)
-                {
-                    Console.WriteLine(GetWriteName(1));
-                }
-                else
-                {
-                    Console.WriteLine(playerNames[1]);
-                }
-            }
+            Console.WriteLine(lobby.playerNames[0]);
         }
 
         public void DrawField(int extraDistance)
@@ -442,7 +340,7 @@ namespace SeaBattle
         }
         public bool IsCellFree(int x, int y)
         {
-            bool isCellFree=cellCoord[x, y].isFree;;
+            bool isCellFree=cellCoord[x, y].isFree;
             if (x < size.x && isCellFree)
             {
                 isCellFree = cellCoord[x+1, y].isFree;
@@ -461,20 +359,8 @@ namespace SeaBattle
             }
             return isCellFree;
         }
-        public void ClearLine(int minusY)
-        {
-            Console.SetCursorPosition(0, Console.CursorTop-minusY);
-            Console.Write(new String(' ', Console.BufferWidth));
-        }
 
-        public string GetWriteName(int playerNumber)
-        {
-            Console.Write("Enter your name: ");
-            playerNames[playerNumber]=Console.ReadLine();
-            ClearLine(1);
-            Console.SetCursorPosition(0, Console.CursorTop-1);
-            return playerNames[playerNumber];
-        }
+        
         public void PaintCell(int x, int y, ConsoleColor color,string symbol)
         {
             Console.SetCursorPosition(x, y);

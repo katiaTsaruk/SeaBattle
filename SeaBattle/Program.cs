@@ -5,13 +5,9 @@ namespace SeaBattle
     {
        
         public static void Main(string[] args)
-        { 
-            Game game = new Game();
-            while (game.currentGameNumber <= game.gameAmount)
-            {
-                game.Start();
-            }
-            
+        {
+            Lobby lobby = new Lobby();
+            lobby.StartLobby();
         }
     }
 } 
