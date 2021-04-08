@@ -8,8 +8,10 @@
       <e p="SeaBattle" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
         <e p="Cell.cs" t="Include" />
-        <e p="DrawField.cs" t="Include" />
+        <e p="Draw.cs" t="Include" />
+        <e p="Field.cs" t="Include" />
         <e p="Game.cs" t="Include" />
+        <e p="GameInitData.cs" t="Include" />
         <e p="Lobby.cs" t="Include" />
         <e p="obj" t="ExcludeRecursive" />
         <e p="Program.cs" t="Include" />

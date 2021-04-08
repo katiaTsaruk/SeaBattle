@@ -39,8 +39,10 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Cell.cs" />
-        <Compile Include="DrawField.cs" />
+        <Compile Include="Draw.cs" />
+        <Compile Include="Field.cs" />
         <Compile Include="Game.cs" />
+        <Compile Include="GameInitData.cs" />
         <Compile Include="Lobby.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />

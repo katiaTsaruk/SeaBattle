@@ -9,6 +9,5 @@
         {
             isFree = SetIsFree;
         }
-        
     }
 }

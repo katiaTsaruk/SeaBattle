@@ -4,7 +4,7 @@ namespace SeaBattle
 {
     public class Lobby
     {
-        private DrawField drawField = new DrawField();
+        private Draw draw = new Draw();
         public int gameAmount=1;
         public int gameMode;
         public int player0WinCounter = 0;
@@ -17,7 +17,7 @@ namespace SeaBattle
             string name;
             Console.Write("Enter your name: ");
             name=Console.ReadLine();
-            drawField.ClearLine(1);
+            draw.ClearLine(1);
             Console.SetCursorPosition(0, Console.CursorTop-1);
             return name;
         }
@@ -68,10 +68,15 @@ namespace SeaBattle
             Console.Write("Press ENTER to continue");
             Console.ReadLine();
             Console.Clear();
+
+            GameInitData gameInitData;
+            gameInitData.PlayerNames = playerNames;
+            gameInitData.GameMode = gameMode;
+            
             for (int i = 1; i <= gameAmount; i++)
             {
                 WriteMatchStatus(i);
-                Game game = new Game();
+                Game game = new Game(gameInitData);
                 game.Start();
             }
         }
@@ -80,7 +85,7 @@ namespace SeaBattle
         {
             if (!int.TryParse(Console.ReadLine(), out gameAmount))
             {
-                drawField.ClearLine(1);
+                draw.ClearLine(1);
                 Console.SetCursorPosition(1, Console.CursorTop - 1);
                 Console.Write("Are you an Idiot? Please write a number: ");
             }
@@ -93,7 +98,7 @@ namespace SeaBattle
             {
                 while (!int.TryParse(Console.ReadLine(), out gameMode))
                 {
-                    drawField.ClearLine(1);
+                    draw.ClearLine(1);
                     Console.SetCursorPosition(1, Console.CursorTop - 1);
                     Console.Write("Are you an Idiot? Please write a number: ");
                 }
@@ -105,7 +110,7 @@ namespace SeaBattle
                 else
                 {
                     isCorrect = false;
-                    drawField.ClearLine(1);
+                    draw.ClearLine(1);
                     Console.SetCursorPosition(1, Console.CursorTop - 1);
                     Console.Write("Are you an Idiot? The number between 1 and 3: ");
                 }
