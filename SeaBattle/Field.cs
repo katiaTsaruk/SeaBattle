@@ -30,21 +30,21 @@
         public bool IsCellFree(int x, int y)
         {
             bool isCellFree=CellCoord[x, y].isFree;
-            if (x < Size.x && isCellFree)
+            if (x < Size.x-1 && isCellFree)
             {
                 isCellFree = CellCoord[x+1, y].isFree;
             }
-            if (x > 2 && isCellFree)
+            if (x > 0 && isCellFree)
             {
                 isCellFree = CellCoord[x-1, y].isFree;
             }
-            if (y != 2 && y != Size.y + 3 && isCellFree) 
-            {
-                isCellFree = CellCoord[x, y-1].isFree;
-            }
-            if (y != Size.y && y != Size.y * 2 + 1 && isCellFree) 
+            if (y< Size.y+1 && isCellFree) 
             {
                 isCellFree = CellCoord[x, y+1].isFree;
+            }
+            if (y >0 && isCellFree) 
+            {
+                isCellFree = CellCoord[x, y-1].isFree;
             }
             return isCellFree;
         } 

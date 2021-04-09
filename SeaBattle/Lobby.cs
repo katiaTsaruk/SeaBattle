@@ -83,7 +83,7 @@ namespace SeaBattle
 
         public void GetGameAmount()
         {
-            if (!int.TryParse(Console.ReadLine(), out gameAmount))
+            while (!int.TryParse(Console.ReadLine(), out gameAmount))
             {
                 draw.ClearLine(1);
                 Console.SetCursorPosition(1, Console.CursorTop - 1);

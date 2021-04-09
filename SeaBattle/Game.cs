@@ -6,7 +6,6 @@ namespace SeaBattle
     {   // можно сделать управление стрелочками для расстановки кораблей и подсвечивать возможные варианты клеточек 
         // можно сделать проверку на то ходили ли уже в эту клетку
         // ии после попадания ходит в соседние клетки и не ходит в те же
-        private Field field = new Field();
         private Draw draw = new Draw();
         
         public bool isPlayer1Turn=true;
@@ -25,7 +24,7 @@ namespace SeaBattle
         public void Start()
         {
             Console.SetCursorPosition(0, 0);
-            DrawTwoFields();
+            draw.DrawTwoFields(_playerNames);
             SetFlotilia(false);
             SetFlotilia(true);
             Update();
@@ -66,16 +65,16 @@ namespace SeaBattle
             }
 
             Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.SetCursorPosition(0, field.Size.y*2+4);
+            Console.SetCursorPosition(0, draw.field[0].Size.y*2+4);
             draw.ClearLine(0);
-            Console.SetCursorPosition(0, field.Size.y*2+4);
+            Console.SetCursorPosition(0, draw.field[0].Size.y*2+4);
             Console.WriteLine($"{_playerNames[playerNumber]} turn");
             Console.ResetColor();
         }
 
         public void WriteScore()
         {
-            Console.SetCursorPosition(0, field.Size.y*2+5);
+            Console.SetCursorPosition(0, draw.field[0].Size.y*2+7);
             Console.WriteLine($"{_playerNames[0]} score: {player0HitCounter}");
             Console.WriteLine($"{_playerNames[1]} score: {player1HitCounter}");
         }
@@ -86,54 +85,45 @@ namespace SeaBattle
             {
 
                // lobby.player0WinCounter ++;
-                Console.SetCursorPosition(1,field.Size.y*2+2);
+                Console.SetCursorPosition(1,draw.field[0].Size.y*2+4);
                 Console.WriteLine($"{_playerNames[0]} wins!");
             }
             else
             {
                 player1HitCounter++;
-                Console.SetCursorPosition(1,field.Size.y*2+2);
+                Console.SetCursorPosition(1,draw.field[0].Size.y*2+4);
                 Console.WriteLine($"{_playerNames[1]} wins!");
             }
         }
 
         public void Shoot()
         {
-            Console.SetCursorPosition(1,field.Size.y*2+2);
+            Console.SetCursorPosition(1,draw.field[0].Size.y*2+4);
             Random rand = new Random();
             int x, y;
-            if (isPlayer1Turn)
+            if ( _gameMode == 3)
             {
-                if (_gameMode == 2 || _gameMode == 3)
-                {
-                    x = GetShootCoord(true) + 1;
-                    y = GetShootCoord(false) + 1;
-                    draw.ClearLine(1);
-                    draw.ClearLine(2);
-                }
-                else
-                {
-                    x = rand.Next(1, field.Size.x);
-                    y = rand.Next(1, field.Size.y);
-                }
+                x = GetShootCoord(true);
+                y = GetShootCoord(false);
+                draw.ClearLine(1);
+                draw.ClearLine(2);
+            }
+            else if(_gameMode==2 && isPlayer1Turn)
+            {
+                x = GetShootCoord(true);
+                y = GetShootCoord(false);
+                draw.ClearLine(1);
+                draw.ClearLine(2);
             }
             else
-            { 
-                if (_gameMode == 3)
-                {
-                    x = GetShootCoord(true) + 1;
-                    y = GetShootCoord(false) + field.Size.y+2;
-                    draw.ClearLine(1);
-                    draw.ClearLine(2);
-                }
-                else
-                {
-                    x = rand.Next(1, field.Size.x);
-                    y = rand.Next(field.Size.y + 2, field.Size.y * 2 + 1);
-                }
+            {
+                x = rand.Next(0, draw.field[0].Size.x);
+                y = rand.Next(0, draw.field[0].Size.y);
             }
+            
+            int playerCheck = isPlayer1Turn ? 1 : 0;
 
-            if (field.CellCoord[x, y].isFree)
+            if (draw.field[playerCheck].CellCoord[x, y].isFree)
             {
                 draw.DrawShootResult(x,y,false);
                 isPlayer1Turn = !isPlayer1Turn;
@@ -158,12 +148,12 @@ namespace SeaBattle
             if (isXAxis)
             {
                 axis = "x";
-                maxCoord = field.Size.x-2;
+                maxCoord = draw.field[0].Size.x-1;
             }
             else
             {
                 axis = "y";
-                maxCoord=field.Size.y-2;
+                maxCoord=draw.field[0].Size.y-1;
             }
             int shootCoord=10;
             bool isCorrect = false;
@@ -191,18 +181,6 @@ namespace SeaBattle
             }
             return shootCoord;
         }
-
-        public void DrawTwoFields()
-        {
-            draw.DrawField(0);
-            Console.WriteLine("");
-            Console.WriteLine(_playerNames[0]);
-            draw.DrawField(field.Size.y+1);
-            Console.WriteLine("");
-            Console.WriteLine(_playerNames[1]);
-        }
-
-
         public void SpawnShips(int length, int amount, bool isSecondField)
         {
             shipCellNum += length * amount;
@@ -211,7 +189,7 @@ namespace SeaBattle
             string shipSymbol;
             if (isSecondField)
             {
-                dopHeight = field.Size.y + 1;
+                dopHeight = draw.field[0].Size.y + 1;
                 shipSymbol = "#";
             }
             else
@@ -219,17 +197,17 @@ namespace SeaBattle
                 dopHeight = 0;
                 shipSymbol = "@";
             }
-
+            int playerCheck = isPlayer1Turn ? 1 : 0;
             for (int i = 0; i < amount; i++)
             {
-                Console.SetCursorPosition(rand.Next(2, field.Size.x - length), rand.Next(2, field.Size.y - length) + dopHeight);
+                Console.SetCursorPosition(rand.Next(1, draw.field[0].Size.x - length+1), rand.Next(1, draw.field[0].Size.y - length+1) + dopHeight);
                 if (rand.Next(1, 3) == 1)
                 {
-                    if (field.IsPlaceFree(Console.CursorLeft, Console.CursorTop, length, true))
+                    if (draw.field[playerCheck].IsPlaceFree(Console.CursorLeft-1, Console.CursorTop-1, length, true))
                     {
                         draw.CreateLongRowShip(length,  shipSymbol);
                     }
-                    else if (field.IsPlaceFree(Console.CursorLeft, Console.CursorTop, length, false))
+                    else if (draw.field[playerCheck].IsPlaceFree(Console.CursorLeft-1, Console.CursorTop-1, length, false))
                     {
                         draw.CreateLongColumnShip(length, shipSymbol);
                     }
@@ -240,11 +218,11 @@ namespace SeaBattle
                 }
                 else
                 {
-                    if (field.IsPlaceFree(Console.CursorLeft, Console.CursorTop, length, false))
+                    if (draw.field[playerCheck].IsPlaceFree(Console.CursorLeft-1, Console.CursorTop-1, length, false))
                     {
                         draw.CreateLongColumnShip(length, shipSymbol);
                     }
-                    else if (field.IsPlaceFree(Console.CursorLeft, Console.CursorTop, length, true))
+                    else if (draw.field[playerCheck].IsPlaceFree(Console.CursorLeft-1, Console.CursorTop-1, length, true))
                     {
                         draw.CreateLongRowShip(length, shipSymbol);
                     }

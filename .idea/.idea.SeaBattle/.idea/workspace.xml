@@ -8,15 +8,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3de34b6a-b216-4c74-bf40-41a1b014deab" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/SeaBattle/Field.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SeaBattle/GameInitData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.SeaBattle/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SeaBattle/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SeaBattle/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SeaBattle/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeaBattle/Cell.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SeaBattle/Cell.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeaBattle/DrawField.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SeaBattle/Draw.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SeaBattle/Draw.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SeaBattle/Draw.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SeaBattle/Field.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SeaBattle/Field.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SeaBattle/Game.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SeaBattle/Game.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SeaBattle/Lobby.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SeaBattle/Lobby.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeaBattle/SeaBattle.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/SeaBattle/SeaBattle.csproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,12 +32,12 @@
       <option value="$PROJECT_DIR$/SeaBattle/Program.cs" />
       <option value="$PROJECT_DIR$/SeaBattle/IField.cs" />
       <option value="$PROJECT_DIR$/SeaBattle/Input.cs" />
-      <option value="$PROJECT_DIR$/SeaBattle/Draw.cs" />
-      <option value="$PROJECT_DIR$/SeaBattle/GameInitData.cs" />
-      <option value="$PROJECT_DIR$/SeaBattle/Game.cs" />
       <option value="$PROJECT_DIR$/SeaBattle/Cell.cs" />
       <option value="$PROJECT_DIR$/SeaBattle/Lobby.cs" />
       <option value="$PROJECT_DIR$/SeaBattle/Field.cs" />
+      <option value="$PROJECT_DIR$/SeaBattle/GameInitData.cs" />
+      <option value="$PROJECT_DIR$/SeaBattle/Game.cs" />
+      <option value="$PROJECT_DIR$/SeaBattle/Draw.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1qFjHR2OFeDmSKvQqCo5BF2hWaL" />
@@ -51,7 +47,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.34991798" />
+    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.34994584" />
     <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.0" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
@@ -96,6 +92,7 @@
       <workItem from="1617346477501" duration="15728000" />
       <workItem from="1617468355284" duration="10045000" />
       <workItem from="1617781679151" duration="20129000" />
+      <workItem from="1617994626230" duration="8032000" />
     </task>
     <servers />
   </component>
