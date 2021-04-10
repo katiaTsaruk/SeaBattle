@@ -203,11 +203,11 @@ namespace SeaBattle
                 Console.SetCursorPosition(rand.Next(1, draw.field[0].Size.x - length+1), rand.Next(1, draw.field[0].Size.y - length+1) + dopHeight);
                 if (rand.Next(1, 3) == 1)
                 {
-                    if (draw.field[playerCheck].IsPlaceFree(Console.CursorLeft-1, Console.CursorTop-1, length, true))
+                    if (draw.field[playerCheck].IsPlaceFree(Console.CursorLeft-1, Console.CursorTop-1-dopHeight, length, true))
                     {
                         draw.CreateLongRowShip(length,  shipSymbol);
                     }
-                    else if (draw.field[playerCheck].IsPlaceFree(Console.CursorLeft-1, Console.CursorTop-1, length, false))
+                    else if (draw.field[playerCheck].IsPlaceFree(Console.CursorLeft-1, Console.CursorTop-1-dopHeight, length, false))
                     {
                         draw.CreateLongColumnShip(length, shipSymbol);
                     }
@@ -218,11 +218,11 @@ namespace SeaBattle
                 }
                 else
                 {
-                    if (draw.field[playerCheck].IsPlaceFree(Console.CursorLeft-1, Console.CursorTop-1, length, false))
+                    if (draw.field[playerCheck].IsPlaceFree(Console.CursorLeft-1, Console.CursorTop-1-dopHeight, length, false))
                     {
                         draw.CreateLongColumnShip(length, shipSymbol);
                     }
-                    else if (draw.field[playerCheck].IsPlaceFree(Console.CursorLeft-1, Console.CursorTop-1, length, true))
+                    else if (draw.field[playerCheck].IsPlaceFree(Console.CursorLeft-1, Console.CursorTop-1-dopHeight, length, true))
                     {
                         draw.CreateLongRowShip(length, shipSymbol);
                     }

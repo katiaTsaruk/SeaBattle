@@ -10,8 +10,13 @@ namespace SeaBattle
             Console.SetCursorPosition(0, Console.CursorTop-minusY);
             Console.Write(new String(' ', Console.BufferWidth));
         }
-       
-        public void DrawField(int extraDistance)
+
+        public Draw()
+        {
+            field[0] = new Field();
+            field[1] = new Field();
+        }
+        public void DrawField(int extraDist)
         {
             Console.Write(" ");
             for (int i = 0; i < field[1].Size.x ; i++)
@@ -25,11 +30,11 @@ namespace SeaBattle
                 Console.WriteLine(i);
             }
             
-            for (int i = 1; i <= field[0].Size.x; i++)
+            for (int i = 0; i < field[0].Size.x; i++)
             {
-                for (int j = 1+extraDistance; j <= field[0].Size.y+extraDistance; j++)
+                for (int j = extraDist; j < field[0].Size.y+extraDist; j++)
                 {
-                    PaintCell(i,j,ConsoleColor.White," ");
+                    PaintCell(i+1,j+1,ConsoleColor.White," ");
                 }
             }
         }
@@ -66,32 +71,66 @@ namespace SeaBattle
             Console.WriteLine(name[1]);
         }
         public void CreateLongRowShip(int length, string ShipSymbol)
-        {
-            int playerCheck = Console.CursorTop > field[0].Size.y ? 1 : 0;
+        { 
+            int playerCheck ;
+            int extraDist;
+            if (Console.CursorTop > field[0].Size.y)
+            {
+                playerCheck = 1;
+                extraDist= field[0].Size.y+2;
+            }
+            else
+            {
+                playerCheck = 0;
+                extraDist = 0;
+            }
             for (int i = 0; i < length; i++)
             {
                 PaintCell(Console.CursorLeft, Console.CursorTop, ConsoleColor.White, ShipSymbol);
-                field[playerCheck].CellCoord[Console.CursorLeft-1, Console.CursorTop].isFree = false;
+                field[playerCheck].CellCoord[Console.CursorLeft-2, Console.CursorTop-1-extraDist].isFree = false;
             }
         }
         public void CreateLongColumnShip(int length,  string ShipSymbol)
         {
-            int playerCheck = Console.CursorTop > field[0].Size.y ? 1 : 0;
+            int playerCheck ;
+            int extraDist;
+            if (Console.CursorTop > field[0].Size.y)
+            {
+                playerCheck = 1;
+                extraDist= field[0].Size.y+2;
+            }
+            else
+            {
+                playerCheck = 0;
+                extraDist = 0;
+            }
             int x = Console.CursorLeft;
             for (int i = 0; i < length; i++)
             {
                 PaintCell(x, Console.CursorTop+1, ConsoleColor.White, ShipSymbol);
-                field[playerCheck].CellCoord[Console.CursorLeft-1, Console.CursorTop].isFree = false;
+                field[playerCheck].CellCoord[Console.CursorLeft-2, Console.CursorTop-1-extraDist].isFree = false;
             }
         }
         public void PaintCell(int x, int y, ConsoleColor color,string symbol)
         {
-            int playerCheck = y > field[0].Size.y ? 1 : 0;
+            int playerCheck ;
+            int extraDist;
+            if (y > field[0].Size.y)
+            {
+                playerCheck = 1;
+                extraDist= field[0].Size.y+2;
+            }
+            else
+            {
+                playerCheck = 0;
+                extraDist = 0;
+            }
+            
             Console.SetCursorPosition(x, y);
             Console.BackgroundColor = color;
             Cell cell = new Cell(true);
-            field[playerCheck].CellCoord[x, y] = cell;
-            Console.Write(symbol);
+            field[playerCheck].CellCoord[x-1, y-extraDist-1] = cell;
+             Console.Write(symbol);
             Console.ResetColor();
         }
     }
