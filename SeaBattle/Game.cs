@@ -98,7 +98,7 @@ namespace SeaBattle
 
         public void Shoot()
         {
-            Console.SetCursorPosition(1,draw.field[0].Size.y*2+4);
+            Console.SetCursorPosition(1,draw.field[0].Size.y*2+5);
             Random rand = new Random();
             int x, y;
             if ( _gameMode == 3)
@@ -121,16 +121,27 @@ namespace SeaBattle
                 y = rand.Next(0, draw.field[0].Size.y);
             }
             
-            int playerCheck = isPlayer1Turn ? 1 : 0;
+            int playerCheck;
+            int extraDist;
+            if (isPlayer1Turn)
+            {
+                playerCheck = 0;
+                extraDist = 0;
+            }
+            else
+            {
+                playerCheck = 1;
+                extraDist= draw.field[0].Size.y + 2;
+            }
 
             if (draw.field[playerCheck].CellCoord[x, y].isFree)
             {
-                draw.DrawShootResult(x,y,false);
+                draw.DrawShootResult(x+1,y+extraDist+1,false);
                 isPlayer1Turn = !isPlayer1Turn;
             }
             else
             {
-                draw.DrawShootResult(x,y,true);
+                draw.DrawShootResult(x+1,y+extraDist+1,true);
                 if (!isPlayer1Turn)
                 {
                     player0HitCounter++;
@@ -189,7 +200,7 @@ namespace SeaBattle
             string shipSymbol;
             if (isSecondField)
             {
-                dopHeight = draw.field[0].Size.y + 1;
+                dopHeight = draw.field[0].Size.y + 2;
                 shipSymbol = "#";
             }
             else

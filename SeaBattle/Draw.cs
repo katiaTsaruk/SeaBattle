@@ -41,20 +41,22 @@ namespace SeaBattle
 
         public void DrawShootResult(int x, int y,bool isHit)
         {
-            string shootResult;
+            string shootResult,resSymbol;
             ConsoleColor resultColor;
             if (isHit)
             {
                 shootResult = "Hit";
                 resultColor = ConsoleColor.Red;
+                resSymbol = "#";
             }
             else
             {
                 shootResult = "Miss";
                 resultColor = ConsoleColor.Green;
+                resSymbol = " ";
             }
-            PaintCell(x, y, resultColor, "#");
-            Console.SetCursorPosition(1, field[0].Size.y * 2 + 4);
+            PaintCell(x, y, resultColor, resSymbol);
+            Console.SetCursorPosition(1, field[0].Size.y * 2 + 5);
             Console.WriteLine(shootResult);
             Console.Write("Press ENTER to continue");
             Console.ReadLine();
@@ -105,9 +107,10 @@ namespace SeaBattle
                 extraDist = 0;
             }
             int x = Console.CursorLeft;
+            int y = Console.CursorTop ;
             for (int i = 0; i < length; i++)
             {
-                PaintCell(x, Console.CursorTop+1, ConsoleColor.White, ShipSymbol);
+                PaintCell(x, y+i, ConsoleColor.White, ShipSymbol);
                 field[playerCheck].CellCoord[Console.CursorLeft-2, Console.CursorTop-1-extraDist].isFree = false;
             }
         }

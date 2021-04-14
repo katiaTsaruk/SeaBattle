@@ -38,7 +38,7 @@
             {
                 isCellFree = CellCoord[x-1, y].isFree;
             }
-            if (y< Size.y+1 && isCellFree) 
+            if (y< Size.y-1 && isCellFree) 
             {
                 isCellFree = CellCoord[x, y+1].isFree;
             }
