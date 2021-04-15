@@ -2,16 +2,17 @@
 
 namespace SeaBattle
 {
-    public class Game
+    public class Game//создавать поле туть а не в дров
+    
     {   // можно сделать управление стрелочками для расстановки кораблей и подсвечивать возможные варианты клеточек 
         // можно сделать проверку на то ходили ли уже в эту клетку
         // ии после попадания ходит в соседние клетки и не ходит в те же
         private Draw draw = new Draw();
-        
-        public bool isPlayer1Turn=true;
-        public int player0HitCounter = 0;
-        public int player1HitCounter = 0;
-        public int shipCellNum=0;
+
+        private bool isPlayer1Turn=true;
+        private int player0HitCounter = 0;
+        private int player1HitCounter = 0;
+        private int shipCellNum=0;
         private int _gameMode;
         private string[] _playerNames;
         
@@ -32,7 +33,7 @@ namespace SeaBattle
             PrepareNextGame();
         }
 
-        public void PrepareNextGame()
+        private void PrepareNextGame()
         {
             Console.Write("Press ENTER to continue");
             Console.ReadLine();
@@ -42,7 +43,7 @@ namespace SeaBattle
             player1HitCounter = 0;
         }
 
-        public void Update()
+        private void Update()
         {
             while (player0HitCounter != shipCellNum/2 && player1HitCounter != shipCellNum/2)
             {
@@ -52,7 +53,7 @@ namespace SeaBattle
             }
         }
 
-        public void WriteWhoseTurn()
+        private void WriteWhoseTurn()
         {
             int playerNumber;
             if (isPlayer1Turn)
@@ -192,7 +193,7 @@ namespace SeaBattle
             }
             return shootCoord;
         }
-        public void SpawnShips(int length, int amount, bool isSecondField)
+        public void SpawnShips(int length, int amount, bool isSecondField)// в дров 
         {
             shipCellNum += length * amount;
             Random rand = new Random();

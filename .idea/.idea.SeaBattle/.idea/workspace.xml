@@ -10,7 +10,6 @@
     <list default="true" id="3de34b6a-b216-4c74-bf40-41a1b014deab" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SeaBattle/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SeaBattle/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SeaBattle/Draw.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SeaBattle/Draw.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeaBattle/Field.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SeaBattle/Field.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SeaBattle/Game.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SeaBattle/Game.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -20,6 +19,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5F37459E-F130-4442-BA19-EE268C49D074/e2/113b97bf/Console.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
@@ -35,8 +37,8 @@
       <option value="$PROJECT_DIR$/SeaBattle/Lobby.cs" />
       <option value="$PROJECT_DIR$/SeaBattle/GameInitData.cs" />
       <option value="$PROJECT_DIR$/SeaBattle/Field.cs" />
-      <option value="$PROJECT_DIR$/SeaBattle/Draw.cs" />
       <option value="$PROJECT_DIR$/SeaBattle/Game.cs" />
+      <option value="$PROJECT_DIR$/SeaBattle/Draw.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1qFjHR2OFeDmSKvQqCo5BF2hWaL" />
@@ -94,7 +96,7 @@
       <workItem from="1617994626230" duration="8032000" />
       <workItem from="1618062299853" duration="3584000" />
       <workItem from="1618069500557" duration="10501000" />
-      <workItem from="1618412914315" duration="5759000" />
+      <workItem from="1618412914315" duration="9898000" />
     </task>
     <servers />
   </component>

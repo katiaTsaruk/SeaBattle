@@ -89,7 +89,7 @@ namespace SeaBattle
             for (int i = 0; i < length; i++)
             {
                 PaintCell(Console.CursorLeft, Console.CursorTop, ConsoleColor.White, ShipSymbol);
-                field[playerCheck].CellCoord[Console.CursorLeft-2, Console.CursorTop-1-extraDist].isFree = false;
+                field[playerCheck].CellCoord[Console.CursorLeft-2, Console.CursorTop-1-extraDist].isFree = false;//поменять местами с спавн сеткурсорпоз
             }
         }
         public void CreateLongColumnShip(int length,  string ShipSymbol)
