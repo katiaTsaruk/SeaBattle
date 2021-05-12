@@ -38,12 +38,14 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="AllProfiles.cs" />
         <Compile Include="Cell.cs" />
         <Compile Include="Draw.cs" />
         <Compile Include="Field.cs" />
         <Compile Include="Game.cs" />
         <Compile Include="GameInitData.cs" />
         <Compile Include="Lobby.cs" />
+        <Compile Include="PlayerProfile.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>

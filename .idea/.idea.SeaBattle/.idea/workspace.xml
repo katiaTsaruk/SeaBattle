@@ -8,11 +8,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3de34b6a-b216-4c74-bf40-41a1b014deab" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/SeaBattle/AllProfiles.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SeaBattle/PlayerProfile.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.SeaBattle/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SeaBattle/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SeaBattle/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SeaBattle/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SeaBattle/Draw.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SeaBattle/Draw.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeaBattle/Field.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SeaBattle/Field.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SeaBattle/Game.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SeaBattle/Game.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SeaBattle/GameInitData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SeaBattle/GameInitData.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SeaBattle/Lobby.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SeaBattle/Lobby.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SeaBattle/SeaBattle.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/SeaBattle/SeaBattle.csproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,22 +28,27 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5F37459E-F130-4442-BA19-EE268C49D074/e2/113b97bf/Console.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9B25E913-D31D-4B8B-83EB-DE8A2012E613/00/9c70f438/XmlSerializer.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
       <option value="$PROJECT_DIR$/SeaBattle/CoordSystem.cs" />
       <option value="$PROJECT_DIR$/SeaBattle/GameLogic.cs" />
-      <option value="$PROJECT_DIR$/SeaBattle/Player.cs" />
       <option value="$PROJECT_DIR$/SeaBattle/GameLobby.cs" />
       <option value="$PROJECT_DIR$/SeaBattle/DrawField.cs" />
       <option value="$PROJECT_DIR$/SeaBattle/Program.cs" />
       <option value="$PROJECT_DIR$/SeaBattle/IField.cs" />
       <option value="$PROJECT_DIR$/SeaBattle/Input.cs" />
       <option value="$PROJECT_DIR$/SeaBattle/Cell.cs" />
-      <option value="$PROJECT_DIR$/SeaBattle/GameInitData.cs" />
       <option value="$PROJECT_DIR$/SeaBattle/Field.cs" />
-      <option value="$PROJECT_DIR$/SeaBattle/Game.cs" />
+      <option value="$PROJECT_DIR$/SeaBattle/Player.cs" />
+      <option value="$PROJECT_DIR$/SeaBattle/PlayerProfile.cs" />
+      <option value="$PROJECT_DIR$/SeaBattle/SaveProfiles.cs" />
+      <option value="$PROJECT_DIR$/SeaBattle/SerializeProfiles.cs" />
+      <option value="$PROJECT_DIR$/SeaBattle/AllProfiles.cs" />
+      <option value="$PROJECT_DIR$/SeaBattle/GameInitData.cs" />
       <option value="$PROJECT_DIR$/SeaBattle/Lobby.cs" />
+      <option value="$PROJECT_DIR$/SeaBattle/Game.cs" />
       <option value="$PROJECT_DIR$/SeaBattle/Draw.cs" />
     </changedPaths>
   </component>
@@ -100,7 +109,8 @@
       <workItem from="1618069500557" duration="10501000" />
       <workItem from="1618412914315" duration="9898000" />
       <workItem from="1620491974670" duration="1178000" />
-      <workItem from="1620816044853" duration="2448000" />
+      <workItem from="1620816044853" duration="9501000" />
+      <workItem from="1620839593444" duration="2656000" />
     </task>
     <servers />
   </component>

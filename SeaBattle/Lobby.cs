@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Policy;
 
 namespace SeaBattle
 {
@@ -7,37 +8,41 @@ namespace SeaBattle
         private Draw draw = new Draw();
         private int gameAmount = 1;
         private int gameMode;
-        private int player0WinCounter = 0;
-        private int player1WinCounter = 0;
-        private string[] playerNames = new string[2];
+        private PlayerProfile player0;
+        private PlayerProfile player1;
+        public AllProfiles allProfiles = new AllProfiles();
+        //private string[] playerNames = new string[2];
 
 
-        private string GetName()
+        private PlayerProfile GetProfile()
         {
             string name;
+            string password;
             Console.Write("Enter your name: ");
             name = Console.ReadLine();
-            draw.ClearLine(1);
+            Console.Write("Enter your password: ");
+            password = Console.ReadLine();
+            PlayerProfile profile =allProfiles.SetProfile(name, password);
             Console.SetCursorPosition(0, Console.CursorTop - 1);
-            return name;
+            return profile;
         }
 
         private void SetName()
         {
             if (gameMode == 1)
             {
-                playerNames[0] = "Bot 1";
-                playerNames[1] = "Bot 2";
+                player0=allProfiles.SetProfile("Bot 1", "password");
+                player1=allProfiles.SetProfile("Bot 2", "password");
             }
             else if (gameMode == 2)
             {
-                playerNames[0] = "Bot 1";
-                playerNames[1] = GetName();
+                player0 = allProfiles.SetProfile("Bot 1", "password");
+                player1 = GetProfile();
             }
             else
             {
-                playerNames[0] = GetName();
-                playerNames[1] = GetName();
+                player0 = GetProfile();
+                player1 = GetProfile();
             }
         }
 
@@ -47,9 +52,9 @@ namespace SeaBattle
             Console.SetCursorPosition(15, 0);
             Console.Write($"Game {currentGameNumber}/{gameAmount}");
             Console.SetCursorPosition(15, 1);
-            Console.Write($"Amount of {playerNames[0]} wins: {player0WinCounter}");
+            Console.Write($"Amount of {player0.name} wins: {player0.wins}");
             Console.SetCursorPosition(15, 2);
-            Console.Write($"Amount of {playerNames[1]} wins: {player1WinCounter}");
+            Console.Write($"Amount of {player1.name} wins: {player1.wins}");
             Console.ResetColor();
         }
 
@@ -65,13 +70,15 @@ namespace SeaBattle
             GetGameMode();
             Console.Write("Enter amount of matches, you want to play: ");
             GetGameAmount();
+            allProfiles.Load();
             SetName();
             Console.Write("Press ENTER to continue");
             Console.ReadLine();
             Console.Clear();
 
             GameInitData gameInitData;
-            gameInitData.PlayerNames = playerNames;
+            gameInitData.player0 = player0;
+            gameInitData.player1 = player1;
             gameInitData.GameMode = gameMode;
 
             for (int i = 1; i <= gameAmount; i++)
@@ -81,6 +88,7 @@ namespace SeaBattle
                 game.Start();
                 GameResult(game.player0HitCounter, game.shipCellNum);
                 PrepareScreen();
+                allProfiles.Save();
             }
         }
 
@@ -95,15 +103,15 @@ namespace SeaBattle
         {
             if (player0HitCounter == shipCellNum / 2)
             {
-                player0WinCounter++;
+                player0.wins++;
                 Console.SetCursorPosition(1, draw.field[0].Size.y * 2 + 4);
-                Console.WriteLine($"{playerNames[0]} wins!");
+                Console.WriteLine($"{player0.name} wins!");
             }
             else
             {
-                player1WinCounter++;
+                player1.wins++;
                 Console.SetCursorPosition(1, draw.field[0].Size.y * 2 + 4);
-                Console.WriteLine($"{playerNames[1]} wins!");
+                Console.WriteLine($"{player1.name} wins!");
             }
         }
 

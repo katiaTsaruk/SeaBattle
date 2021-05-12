@@ -64,14 +64,14 @@ namespace SeaBattle
             ClearLine(1);
             ClearLine(2);
         }
-        public void DrawTwoFields(string[] name)
+        public void DrawTwoFields(PlayerProfile[] players)
         {
             DrawField(0);
             Console.WriteLine("");
-            Console.WriteLine(name[0]);
+            Console.WriteLine(players[0].name);
             DrawField(field[0].Size.y+2);
             Console.WriteLine("");
-            Console.WriteLine(name[1]);
+            Console.WriteLine(players[1].name);
         }
         public void CreateLongRowShip(int length, string ShipSymbol)
         { 

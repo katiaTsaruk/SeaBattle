@@ -14,11 +14,12 @@ namespace SeaBattle
         private int player1HitCounter;
         public int shipCellNum;
         private int _gameMode;
-        private string[] _playerNames;
+        private PlayerProfile[] players = new PlayerProfile[2];
         
         public Game(GameInitData gameInitData)
         {
-            _playerNames = gameInitData.PlayerNames;
+            players[0] = gameInitData.player0;
+            players[1]=gameInitData.player1;
             _gameMode = gameInitData.GameMode;
         }
 
@@ -29,7 +30,7 @@ namespace SeaBattle
             shipCellNum = 0;
             isPlayer1Turn = true;
             Console.SetCursorPosition(0, 0);
-            draw.DrawTwoFields(_playerNames);
+            draw.DrawTwoFields(players);
             SetFlotilia(false);
             SetFlotilia(true);
             Update();
@@ -71,15 +72,15 @@ namespace SeaBattle
             Console.SetCursorPosition(0, draw.field[0].Size.y*2+4);
             draw.ClearLine(0);
             Console.SetCursorPosition(0, draw.field[0].Size.y*2+4);
-            Console.WriteLine($"{_playerNames[playerNumber]} turn");
+            Console.WriteLine($"{players[playerNumber].name} turn");
             Console.ResetColor();
         }
 
         private void WriteScore()
         {
             Console.SetCursorPosition(0, draw.field[0].Size.y*2+7);
-            Console.WriteLine($"{_playerNames[0]} score: {player0HitCounter}");
-            Console.WriteLine($"{_playerNames[1]} score: {player1HitCounter}");
+            Console.WriteLine($"{players[0].name} score: {player0HitCounter}");
+            Console.WriteLine($"{players[1].name} score: {player1HitCounter}");
         }
 
         private void Shoot()
