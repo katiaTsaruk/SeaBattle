@@ -10,9 +10,9 @@ namespace SeaBattle
         private Draw draw = new Draw();
 
         private bool isPlayer1Turn=true;
-        private int player0HitCounter = 0;
-        private int player1HitCounter = 0;
-        private int shipCellNum=0;
+        public int player0HitCounter;
+        private int player1HitCounter;
+        public int shipCellNum;
         private int _gameMode;
         private string[] _playerNames;
         
@@ -24,13 +24,15 @@ namespace SeaBattle
 
         public void Start()
         {
+            player0HitCounter = 0;
+            player1HitCounter = 0;
+            shipCellNum = 0;
+            isPlayer1Turn = true;
             Console.SetCursorPosition(0, 0);
             draw.DrawTwoFields(_playerNames);
             SetFlotilia(false);
             SetFlotilia(true);
             Update();
-            EndGame();
-            PrepareNextGame();
         }
 
         private void PrepareNextGame()
@@ -73,31 +75,14 @@ namespace SeaBattle
             Console.ResetColor();
         }
 
-        public void WriteScore()
+        private void WriteScore()
         {
             Console.SetCursorPosition(0, draw.field[0].Size.y*2+7);
             Console.WriteLine($"{_playerNames[0]} score: {player0HitCounter}");
             Console.WriteLine($"{_playerNames[1]} score: {player1HitCounter}");
         }
 
-        public void EndGame()//bool perepisat
-        {
-            if (player0HitCounter == shipCellNum/2)
-            {
-
-               // lobby.player0WinCounter ++;
-                Console.SetCursorPosition(1,draw.field[0].Size.y*2+4);
-                Console.WriteLine($"{_playerNames[0]} wins!");
-            }
-            else
-            {
-                player1HitCounter++;
-                Console.SetCursorPosition(1,draw.field[0].Size.y*2+4);
-                Console.WriteLine($"{_playerNames[1]} wins!");
-            }
-        }
-
-        public void Shoot()
+        private void Shoot()
         {
             Console.SetCursorPosition(1,draw.field[0].Size.y*2+5);
             Random rand = new Random();
@@ -153,7 +138,8 @@ namespace SeaBattle
                 }
             }
         }
-        public int GetShootCoord(bool isXAxis)
+
+        private int GetShootCoord(bool isXAxis)
         {
             string axis;
             int maxCoord;
@@ -193,7 +179,8 @@ namespace SeaBattle
             }
             return shootCoord;
         }
-        public void SpawnShips(int length, int amount, bool isSecondField)// в дров 
+
+        private void SpawnShips(int length, int amount, bool isSecondField)// в дров 
         {
             shipCellNum += length * amount;
             Random rand = new Random();
@@ -246,7 +233,7 @@ namespace SeaBattle
             }
         }
 
-        public void SetFlotilia(bool isSecondField)
+        private void SetFlotilia(bool isSecondField)
         {
             //4 cell ship
             SpawnShips(4,1,isSecondField);

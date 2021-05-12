@@ -5,26 +5,26 @@ namespace SeaBattle
     public class Lobby
     {
         private Draw draw = new Draw();
-        public int gameAmount=1;
-        public int gameMode;
-        public int player0WinCounter = 0;
-        public int player1WinCounter = 0;
-        public string[] playerNames=new string[2];
-        
-        
-        public string GetName()
+        private int gameAmount = 1;
+        private int gameMode;
+        private int player0WinCounter = 0;
+        private int player1WinCounter = 0;
+        private string[] playerNames = new string[2];
+
+
+        private string GetName()
         {
             string name;
             Console.Write("Enter your name: ");
-            name=Console.ReadLine();
+            name = Console.ReadLine();
             draw.ClearLine(1);
-            Console.SetCursorPosition(0, Console.CursorTop-1);
+            Console.SetCursorPosition(0, Console.CursorTop - 1);
             return name;
         }
 
-        public void SetName()
+        private void SetName()
         {
-            if (gameMode ==1)
+            if (gameMode == 1)
             {
                 playerNames[0] = "Bot 1";
                 playerNames[1] = "Bot 2";
@@ -40,8 +40,8 @@ namespace SeaBattle
                 playerNames[1] = GetName();
             }
         }
-        
-        public void WriteMatchStatus(int currentGameNumber)
+
+        private void WriteMatchStatus(int currentGameNumber)
         {
             Console.ForegroundColor = ConsoleColor.DarkMagenta;
             Console.SetCursorPosition(15, 0);
@@ -52,6 +52,7 @@ namespace SeaBattle
             Console.Write($"Amount of {playerNames[1]} wins: {player1WinCounter}");
             Console.ResetColor();
         }
+
         public void StartLobby()
         {
             Console.SetCursorPosition(0, 0);
@@ -72,16 +73,41 @@ namespace SeaBattle
             GameInitData gameInitData;
             gameInitData.PlayerNames = playerNames;
             gameInitData.GameMode = gameMode;
-            
+
             for (int i = 1; i <= gameAmount; i++)
             {
                 WriteMatchStatus(i);
                 Game game = new Game(gameInitData);
                 game.Start();
+                GameResult(game.player0HitCounter, game.shipCellNum);
+                PrepareScreen();
             }
         }
 
-        public void GetGameAmount()
+        private void PrepareScreen()
+        {
+            Console.Write("Press ENTER to continue");
+            Console.ReadLine();
+            Console.Clear();
+        }
+
+        private void GameResult(int player0HitCounter, int shipCellNum)
+        {
+            if (player0HitCounter == shipCellNum / 2)
+            {
+                player0WinCounter++;
+                Console.SetCursorPosition(1, draw.field[0].Size.y * 2 + 4);
+                Console.WriteLine($"{playerNames[0]} wins!");
+            }
+            else
+            {
+                player1WinCounter++;
+                Console.SetCursorPosition(1, draw.field[0].Size.y * 2 + 4);
+                Console.WriteLine($"{playerNames[1]} wins!");
+            }
+        }
+
+        private void GetGameAmount()
         {
             while (!int.TryParse(Console.ReadLine(), out gameAmount))
             {
@@ -91,7 +117,7 @@ namespace SeaBattle
             }
         }
 
-        public void GetGameMode()
+        private void GetGameMode()
         {
             bool isCorrect = false;
             while (!isCorrect)

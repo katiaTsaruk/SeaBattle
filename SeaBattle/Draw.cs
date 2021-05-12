@@ -16,7 +16,8 @@ namespace SeaBattle
             field[0] = new Field();
             field[1] = new Field();
         }
-        public void DrawField(int extraDist)
+
+        private void DrawField(int extraDist)
         {
             Console.Write(" ");
             for (int i = 0; i < field[1].Size.x ; i++)
@@ -114,7 +115,8 @@ namespace SeaBattle
                 field[playerCheck].CellCoord[Console.CursorLeft-2, Console.CursorTop-1-extraDist].isFree = false;
             }
         }
-        public void PaintCell(int x, int y, ConsoleColor color,string symbol)
+
+        private void PaintCell(int x, int y, ConsoleColor color,string symbol)
         {
             int playerCheck ;
             int extraDist;

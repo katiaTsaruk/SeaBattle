@@ -27,7 +27,8 @@
             }
             return counter == length;
         }
-        public bool IsCellFree(int x, int y)
+
+        private bool IsCellFree(int x, int y)
         {
             bool isCellFree=CellCoord[x, y].isFree;
             if (x < Size.x-1 && isCellFree)
