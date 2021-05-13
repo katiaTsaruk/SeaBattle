@@ -1,11 +1,18 @@
-﻿namespace SeaBattle
+﻿using System;
+
+namespace SeaBattle
 {
-    public struct PlayerProfile
+    [Serializable]
+    public class PlayerProfile
     {
         public string name;
         public string password;
         public int wins;
 
+        public PlayerProfile()
+        {
+            
+        }
         public PlayerProfile(string name, string password, int wins)
         {
             this.name = name;

@@ -11,9 +11,7 @@ namespace SeaBattle
         private PlayerProfile player0;
         private PlayerProfile player1;
         public AllProfiles allProfiles = new AllProfiles();
-        //private string[] playerNames = new string[2];
-
-
+        
         private PlayerProfile GetProfile()
         {
             string name;
@@ -27,7 +25,7 @@ namespace SeaBattle
             return profile;
         }
 
-        private void SetName()
+        private void SetProfile()
         {
             if (gameMode == 1)
             {
@@ -71,7 +69,8 @@ namespace SeaBattle
             Console.Write("Enter amount of matches, you want to play: ");
             GetGameAmount();
             allProfiles.Load();
-            SetName();
+            SetProfile();
+            allProfiles.Save();
             Console.Write("Press ENTER to continue");
             Console.ReadLine();
             Console.Clear();
